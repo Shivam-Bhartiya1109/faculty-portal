@@ -1,0 +1,2219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>JAIN University – Faculty Research & Academic Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0D1B3E;--navy2:#162251;--navy3:#1C2D6B;
+  --accent:#5B4FDC;--accent2:#7B6FE8;--gold:#F5A623;
+  --white:#FFFFFF;--light:#F5F6FA;--border:#E0E3F0;
+  --text:#1A1E3A;--muted:#6B7296;--danger:#D84040;--success:#1A8A5A;
+  --font:'DM Sans',sans-serif;--serif:'DM Serif Display',serif;
+}
+body{font-family:var(--font);background:var(--light);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+
+/* ── AUTH ── */
+#auth-screen{display:flex;min-height:100vh}
+.auth-left{flex:1.15;background:linear-gradient(145deg,#0a1628 0%,#0D1B3E 40%,#1a2a5e 100%);position:relative;display:flex;flex-direction:column;justify-content:center;padding:4rem 3.5rem;overflow:hidden}
+.auth-left::before{content:'';position:absolute;top:-80px;left:-60px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(91,79,220,.25) 0%,transparent 70%);pointer-events:none}
+.auth-left::after{content:'';position:absolute;bottom:-80px;right:-40px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,.12) 0%,transparent 70%);pointer-events:none}
+.auth-left-deco{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden}
+.auth-left-deco svg{position:absolute;bottom:0;left:0;width:100%;opacity:.06}
+.auth-left-inner{position:relative;z-index:1}
+.auth-logo-left{display:flex;align-items:center;gap:16px;margin-bottom:2.5rem}
+.jain-logo-img{height:56px;width:auto;object-fit:contain;filter:brightness(0) invert(1)}
+.jain-logo-fallback{display:flex;align-items:center;gap:12px}
+.jgi-circle{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#9C6FDC);display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:700;color:#fff;letter-spacing:-.5px;flex-shrink:0;box-shadow:0 4px 16px rgba(91,79,220,.4)}
+.jain-wordmark-white strong{font-size:1.8rem;font-weight:700;letter-spacing:1.5px;color:#fff;line-height:1;display:block}
+.jain-wordmark-white small{font-size:.6rem;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.55);display:block;margin-top:2px}
+.auth-tagline{font-family:var(--serif);font-size:2.5rem;line-height:1.2;color:var(--white);margin-bottom:1.2rem}
+.auth-tagline span{color:var(--gold)}
+.auth-desc{color:rgba(255,255,255,.58);font-size:.93rem;line-height:1.8;max-width:400px;margin-bottom:2rem}
+.auth-features{display:flex;flex-direction:column;gap:.65rem}
+.auth-feature{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.7);font-size:.82rem}
+.auth-feature-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.auth-watermark{position:absolute;bottom:1.5rem;right:2rem;opacity:.04;font-family:var(--serif);font-size:7rem;color:#fff;pointer-events:none;user-select:none;line-height:1}
+
+.auth-right{flex:1;background:var(--white);display:flex;flex-direction:column;justify-content:center;padding:3rem 3.5rem;overflow-y:auto}
+.auth-right-logo{display:flex;align-items:center;gap:14px;margin-bottom:2rem}
+.jgi-badge-sm{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy3));display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:#fff;flex-shrink:0}
+.jain-wm-dark strong{font-size:1.5rem;font-weight:700;letter-spacing:1px;color:var(--navy);line-height:1;display:block}
+.jain-wm-dark small{font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);display:block;margin-top:1px}
+.auth-title{font-size:1.55rem;font-weight:600;margin-bottom:.25rem;color:var(--navy)}
+.auth-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.8rem}
+.form-group{margin-bottom:1.1rem}
+.form-group label{display:block;font-size:.8rem;font-weight:500;color:var(--text);margin-bottom:.4rem}
+.form-group input{width:100%;padding:.7rem 1rem;border:1.5px solid var(--border);border-radius:8px;font-family:var(--font);font-size:.9rem;color:var(--text);background:#fff;transition:border-color .2s,box-shadow .2s}
+.form-group input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(91,79,220,.1)}
+.captcha-row{display:flex;gap:10px;align-items:center}
+.captcha-row input{flex:1}
+.captcha-btn{width:38px;height:38px;border-radius:8px;border:1.5px solid var(--border);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--accent);flex-shrink:0;transition:background .2s}
+.captcha-btn:hover{background:var(--light)}
+.captcha-question{font-size:.82rem;color:var(--muted);margin-bottom:.4rem;font-weight:500}
+.btn-primary{width:100%;padding:.78rem 1.5rem;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:8px;font-family:var(--font);font-size:.95rem;font-weight:500;cursor:pointer;transition:opacity .2s,transform .1s;margin-top:.5rem;box-shadow:0 4px 14px rgba(91,79,220,.3)}
+.btn-primary:hover{opacity:.92}
+.btn-primary:active{transform:scale(.98)}
+.btn-primary-ghost{width:100%;padding:.72rem 1.5rem;background:none;border:1.5px solid var(--border);color:var(--muted);border-radius:8px;font-family:var(--font);font-size:.9rem;cursor:pointer;margin-top:.5rem;transition:border-color .2s,color .2s}
+.btn-primary-ghost:hover{border-color:var(--danger);color:var(--danger)}
+.auth-switch{text-align:center;margin-top:1rem;font-size:.83rem;color:var(--muted)}
+.auth-switch a{color:var(--accent);text-decoration:none;font-weight:500;cursor:pointer}
+.auth-divider{display:flex;align-items:center;gap:.8rem;margin:1rem 0}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.auth-divider span{font-size:.75rem;color:var(--muted)}
+.error-msg{color:var(--danger);font-size:.78rem;margin-top:.3rem}
+.success-msg{color:var(--success);font-size:.8rem;margin-top:.3rem}
+
+/* ── DASHBOARD ── */
+#dashboard{display:none;min-height:100vh;flex-direction:column}
+.dash-nav{background:linear-gradient(90deg,var(--navy) 0%,var(--navy3) 100%);padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.dash-nav-logo{display:flex;align-items:center;gap:10px}
+.dash-nav-logo img{height:32px;filter:brightness(0) invert(1)}
+.dash-nav-logo-fb{display:flex;align-items:center;gap:8px}
+.dash-nav-logo-fb .jgi-badge-sm{width:32px;height:32px;font-size:.65rem}
+.dash-nav-logo-fb span{color:#fff;font-weight:600;font-size:.95rem}
+.dash-nav-right{display:flex;align-items:center;gap:12px}
+.user-pill{background:rgba(255,255,255,.12);border-radius:20px;padding:.3rem .85rem;color:#fff;font-size:.8rem;display:flex;align-items:center;gap:6px}
+.user-pill::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.btn-logout{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:.3rem .85rem;border-radius:6px;font-size:.78rem;cursor:pointer;font-family:var(--font);transition:background .2s}
+.btn-logout:hover{background:rgba(255,255,255,.1)}
+.btn-nav-sm{padding:.3rem .85rem;border-radius:6px;font-size:.78rem;cursor:pointer;font-family:var(--font);border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);color:#fff;transition:background .2s}
+.btn-nav-sm:hover{background:rgba(255,255,255,.2)}
+
+.dash-body{display:flex;flex:1;min-height:0}
+.sidebar{width:255px;background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sidebar-section{padding:.55rem 1.2rem .25rem;font-size:.67rem;text-transform:uppercase;letter-spacing:1.8px;color:var(--muted);font-weight:600}
+.sidebar-item{display:flex;align-items:center;gap:9px;padding:.62rem 1.3rem;color:var(--text);font-size:.88rem;cursor:pointer;border-left:3px solid transparent;transition:all .15s;text-decoration:none;position:relative}
+.sidebar-item:hover{background:var(--light);color:var(--accent)}
+.sidebar-item.active{background:#EEF0FF;color:var(--accent);border-left-color:var(--accent);font-weight:500}
+.sidebar-item.locked{color:#b0b5cc;cursor:not-allowed;pointer-events:none}
+.sidebar-item.locked:hover{background:none}
+.sidebar-item svg{width:16px;height:16px;flex-shrink:0;opacity:.7}
+.sidebar-item.active svg{opacity:1}
+.sidebar-item .lock-icon{margin-left:auto;font-size:.72rem;opacity:.5}
+.sidebar-item.done::after{content:'✓';position:absolute;right:1rem;font-size:.75rem;color:var(--success);font-weight:700}
+.sidebar-pdf{padding:.8rem 1.2rem;margin-top:.5rem;border-top:1px solid var(--border)}
+.btn-pdf{width:100%;padding:.6rem 1rem;background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;border:none;border-radius:8px;font-family:var(--font);font-size:.82rem;font-weight:500;cursor:pointer;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-pdf:hover{opacity:.88}
+.btn-pdf:disabled{background:#ccc;cursor:not-allowed}
+.sidebar-bottom{padding:.8rem 1.2rem;border-top:1px solid var(--border)}
+.progress-label{font-size:.73rem;color:var(--muted);margin-bottom:.4rem;display:flex;justify-content:space-between}
+.progress-bar{height:6px;border-radius:3px;background:var(--border);overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .5s}
+
+.main-content{flex:1;padding:2rem 2.5rem;overflow-y:auto}
+.section-header{margin-bottom:1.6rem}
+.section-header h2{font-size:1.3rem;font-weight:600;color:var(--navy);margin-bottom:.25rem}
+.section-header p{font-size:.86rem;color:var(--muted)}
+.save-strip{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:.9rem 1.3rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:1.4rem;gap:1rem}
+.save-strip p{font-size:.83rem;color:var(--muted)}
+.save-strip-btns{display:flex;gap:.6rem;flex-shrink:0}
+.btn-save{padding:.5rem 1.3rem;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:7px;font-family:var(--font);font-size:.85rem;font-weight:500;cursor:pointer;transition:opacity .2s;box-shadow:0 2px 8px rgba(91,79,220,.25)}
+.btn-save:hover{opacity:.9}
+.btn-reset{padding:.5rem 1rem;background:none;border:1px solid var(--border);border-radius:7px;font-family:var(--font);font-size:.85rem;color:var(--muted);cursor:pointer;transition:all .2s}
+.btn-reset:hover{background:#FEF0F0;border-color:var(--danger);color:var(--danger)}
+.card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1.4rem;margin-bottom:1.1rem}
+.card-title{font-size:.9rem;font-weight:600;color:var(--navy);margin-bottom:.9rem;display:flex;align-items:center;gap:7px}
+.form-row{display:grid;gap:.9rem;margin-bottom:.9rem}
+.form-row.cols2{grid-template-columns:1fr 1fr}
+.form-row.cols3{grid-template-columns:1fr 1fr 1fr}
+.fg{display:flex;flex-direction:column;gap:.35rem}
+.fg label{font-size:.78rem;font-weight:500;color:var(--text)}
+.fg input,.fg select,.fg textarea{padding:.58rem .82rem;border:1.5px solid var(--border);border-radius:7px;font-family:var(--font);font-size:.86rem;color:var(--text);background:#fff;transition:border-color .2s;width:100%}
+.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--accent)}
+.fg textarea{resize:vertical;min-height:78px}
+.fg .hint{font-size:.71rem;color:var(--muted)}
+.upload-zone{border:2px dashed var(--border);border-radius:10px;padding:1.3rem;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;background:#FAFBFF}
+.upload-zone:hover{border-color:var(--accent);background:#F0F0FF}
+.upload-zone .uz-icon{font-size:1.8rem;margin-bottom:.4rem}
+.upload-zone p{font-size:.8rem;color:var(--muted)}
+.upload-zone .uz-name{font-size:.78rem;color:var(--accent);font-weight:500;margin-top:.35rem;word-break:break-all}
+.file-list{margin-top:.7rem;display:flex;flex-direction:column;gap:.45rem}
+.file-chip{display:flex;align-items:center;justify-content:space-between;background:var(--light);border-radius:6px;padding:.4rem .65rem;font-size:.76rem}
+.dynamic-list{display:flex;flex-direction:column;gap:.75rem}
+.dynamic-entry{background:var(--light);border-radius:9px;padding:.95rem;position:relative}
+.dynamic-entry .del-btn{position:absolute;top:.65rem;right:.65rem;background:none;border:1px solid var(--border);border-radius:5px;padding:2px 7px;font-size:.7rem;color:var(--danger);cursor:pointer}
+.btn-add{margin-top:.65rem;padding:.5rem 1rem;background:#EEF0FF;color:var(--accent);border:1.5px dashed var(--accent);border-radius:7px;font-family:var(--font);font-size:.81rem;font-weight:500;cursor:pointer;transition:background .2s;display:inline-flex;align-items:center;gap:5px}
+.btn-add:hover{background:#E0E3FF}
+.btn-add::before{content:'+';font-size:.95rem}
+.tag-select{display:flex;flex-wrap:wrap;gap:.35rem}
+.tag{padding:.28rem .7rem;border-radius:20px;font-size:.76rem;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:var(--muted);transition:all .15s}
+.tag.selected{background:#EEF0FF;border-color:var(--accent);color:var(--accent);font-weight:500}
+.status-banner{padding:.9rem 1.3rem;border-radius:10px;font-size:.85rem;margin-bottom:1.1rem;display:flex;align-items:center;gap:.65rem}
+.status-banner.info{background:#EEF0FF;color:var(--accent)}
+.status-banner.success{background:#E6F6EE;color:var(--success)}
+
+/* Step unlock banner */
+.unlock-notice{background:linear-gradient(135deg,#fff8e6,#fff3cc);border:1px solid #f5c842;border-radius:10px;padding:.9rem 1.3rem;font-size:.85rem;color:#7a5c00;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:14px;padding:2rem;max-width:520px;width:90%;box-shadow:0 24px 60px rgba(0,0,0,.18)}
+.modal h3{font-size:1.08rem;font-weight:600;margin-bottom:.65rem;color:var(--navy)}
+.modal p{font-size:.83rem;color:var(--muted);margin-bottom:1rem;line-height:1.65}
+.modal .fg{margin-bottom:.9rem}
+.modal-actions{display:flex;gap:.7rem;justify-content:flex-end;margin-top:1.4rem}
+.btn-ghost{padding:.5rem 1.1rem;background:none;border:1px solid var(--border);border-radius:7px;font-family:var(--font);font-size:.86rem;cursor:pointer}
+.btn-save-sm{padding:.5rem 1.3rem;background:var(--accent);color:#fff;border:none;border-radius:7px;font-family:var(--font);font-size:.86rem;font-weight:500;cursor:pointer}
+code{background:var(--light);padding:2px 5px;border-radius:4px;font-size:.78rem;color:var(--navy)}
+
+/* Section panels */
+.section-panel{display:none}
+.section-panel.active{display:block}
+
+/* Summary section */
+#sec-summary .summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+.summary-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center}
+.summary-card .sc-num{font-size:2rem;font-weight:700;color:var(--accent);line-height:1}
+.summary-card .sc-label{font-size:.75rem;color:var(--muted);margin-top:.3rem}
+.summary-card.complete{border-color:var(--success);background:#f0fff6}
+.summary-card.complete .sc-num{color:var(--success)}
+.btn-generate-pdf{width:100%;padding:1rem 1.5rem;background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;border:none;border-radius:10px;font-family:var(--font);font-size:1rem;font-weight:600;cursor:pointer;transition:opacity .2s;box-shadow:0 4px 16px rgba(192,57,43,.3);display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:.8rem}
+.btn-generate-pdf:hover{opacity:.9}
+.btn-generate-pdf:disabled{background:#aaa;cursor:not-allowed;box-shadow:none}
+
+/* Photo area */
+.photo-area{display:flex;align-items:center;gap:1.5rem;margin-bottom:.9rem}
+.photo-circle{width:96px;height:96px;border-radius:50%;background:var(--light);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;cursor:pointer;transition:border-color .2s}
+.photo-circle:hover{border-color:var(--accent)}
+.photo-circle img{width:100%;height:100%;object-fit:cover}
+.photo-placeholder{text-align:center;color:var(--muted);font-size:.72rem}
+.photo-placeholder svg{width:26px;height:26px;margin-bottom:3px}
+
+/* Toast */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--navy);color:#fff;padding:.75rem 1.3rem;border-radius:10px;font-size:.86rem;box-shadow:0 8px 30px rgba(0,0,0,.2);z-index:9999;transform:translateY(100px);opacity:0;transition:transform .3s,opacity .3s;max-width:340px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.green{background:var(--success)}
+.toast.red{background:var(--danger)}
+
+@media(max-width:860px){
+  #auth-screen{flex-direction:column}
+  .auth-left{padding:2.5rem 1.5rem;min-height:220px}
+  .auth-right{padding:2rem 1.5rem}
+  .auth-tagline{font-size:1.8rem}
+  .dash-body{flex-direction:column}
+  .sidebar{width:100%;border-right:none;border-bottom:1px solid var(--border)}
+  .main-content{padding:1.2rem}
+  .form-row.cols2,.form-row.cols3{grid-template-columns:1fr}
+  #sec-summary .summary-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ AUTH SCREEN ══════════════════ -->
+<div id="auth-screen">
+  <div class="auth-left">
+    <div class="auth-left-deco">
+      <svg viewBox="0 0 800 300" preserveAspectRatio="none"><path d="M0,200 C200,100 600,300 800,150 L800,300 L0,300 Z" fill="white"/></svg>
+    </div>
+    <div class="auth-left-inner">
+      <div class="auth-logo-left">
+        <img src="https://www.jainuniversity.ac.in/images/jain-logo.png" alt="JAIN University" class="jain-logo-img" onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='flex'"/>
+        <div class="jain-logo-fallback" id="logo-fallback" style="display:none">
+          <div class="jgi-circle">JGI</div>
+          <div class="jain-wordmark-white"><strong>JAIN</strong><small>Deemed-to-be University</small></div>
+        </div>
+      </div>
+      <p class="auth-tagline">Faculty Research<br/>& Academic<br/><span>Profile Portal</span></p>
+      <p class="auth-desc">A centralised repository for all your academic accomplishments — publications, patents, projects, and professional development — securely organised in your institutional Drive.</p>
+      <div class="auth-features">
+        <div class="auth-feature"><div class="auth-feature-dot"></div>Publications — Scopus, WoS, Peer-reviewed Journals</div>
+        <div class="auth-feature"><div class="auth-feature-dot"></div>Patents Filed & Granted — Indian & International</div>
+        <div class="auth-feature"><div class="auth-feature-dot"></div>Research Grants from Government Agencies</div>
+        <div class="auth-feature"><div class="auth-feature-dot"></div>FDP, Conferences, Awards & Keynote Talks</div>
+        <div class="auth-feature"><div class="auth-feature-dot"></div>Auto PDF Profile Report — saved to Drive</div>
+      </div>
+    </div>
+    <div class="auth-watermark">JGI</div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-right-logo">
+      <img src="https://www.jainuniversity.ac.in/images/jain-logo.png" alt="JAIN" style="height:40px;object-fit:contain" onerror="this.style.display='none';document.getElementById('logo-fallback2').style.display='flex'"/>
+      <div id="logo-fallback2" style="display:none;align-items:center;gap:10px">
+        <div class="jgi-badge-sm">JGI</div>
+        <div class="jain-wm-dark"><strong>JAIN</strong><small>Deemed-to-be University</small></div>
+      </div>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="login-form">
+      <h2 class="auth-title">Sign In</h2>
+      <p class="auth-sub">Your Faculty Profile Dashboard</p>
+      <div class="form-group">
+        <label>Institutional Email</label>
+        <input type="email" id="login-email" placeholder="name@jainuniversity.ac.in"/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="login-password" placeholder="••••••••••"/>
+      </div>
+      <div class="form-group">
+        <p class="captcha-question" id="login-captcha-q"></p>
+        <div class="captcha-row">
+          <input type="number" id="login-captcha-ans" placeholder="Enter CAPTCHA answer"/>
+          <button class="captcha-btn" onclick="refreshCaptcha('login')" title="Refresh">↻</button>
+        </div>
+        <p class="error-msg" id="login-err"></p>
+      </div>
+      <button class="btn-primary" onclick="doLogin()">Log In</button>
+      <button class="btn-primary-ghost" onclick="resetLoginForm()">↺ Reset</button>
+      <div class="auth-divider"><span>New to the portal?</span></div>
+      <p class="auth-switch"><a onclick="showRegister()">Register as Faculty Member →</a></p>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="register-form" style="display:none">
+      <h2 class="auth-title">Register</h2>
+      <p class="auth-sub">Create your faculty profile account</p>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="reg-name" placeholder="Dr. Firstname Lastname"/>
+      </div>
+      <div class="form-group">
+        <label>Institutional Email</label>
+        <input type="email" id="reg-email" placeholder="name@jainuniversity.ac.in"/>
+      </div>
+      <div class="form-group">
+        <label>Department</label>
+        <input type="text" id="reg-dept" placeholder="e.g. Computer Science & Engineering"/>
+      </div>
+      <div class="form-group">
+        <label>Employee ID</label>
+        <input type="text" id="reg-empid" placeholder="JU-XXXXX"/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="reg-pass" placeholder="Min. 8 characters"/>
+      </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" id="reg-pass2" placeholder="Re-enter password"/>
+      </div>
+      <div class="form-group">
+        <p class="captcha-question" id="reg-captcha-q"></p>
+        <div class="captcha-row">
+          <input type="number" id="reg-captcha-ans" placeholder="Enter CAPTCHA answer"/>
+          <button class="captcha-btn" onclick="refreshCaptcha('reg')" title="Refresh">↻</button>
+        </div>
+        <p class="error-msg" id="reg-err"></p>
+        <p class="success-msg" id="reg-ok"></p>
+      </div>
+      <button class="btn-primary" onclick="doRegister()">Register & Continue</button>
+      <button class="btn-primary-ghost" onclick="resetRegisterForm()">↺ Reset Form</button>
+      <p class="auth-switch" style="margin-top:.8rem">Already registered? <a onclick="showLogin()">Sign in</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ DASHBOARD ══════════════════ -->
+<div id="dashboard">
+  <nav class="dash-nav">
+    <div class="dash-nav-logo">
+      <img src="https://www.jainuniversity.ac.in/images/jain-logo.png" alt="JAIN" onerror="this.style.display='none';document.getElementById('nav-logo-fb').style.display='flex'"/>
+      <div id="nav-logo-fb" class="dash-nav-logo-fb" style="display:none">
+        <div class="jgi-badge-sm">JGI</div>
+        <span>JAIN Faculty Portal</span>
+      </div>
+    </div>
+    <div class="dash-nav-right">
+      <span class="user-pill" id="nav-user-pill">Faculty</span>
+      <button class="btn-nav-sm" onclick="showScriptConfig()">⚙ Drive Config</button>
+      <button class="btn-nav-sm" onclick="resyncToDrive()" title="Re-send your registration to Drive if the script was not configured at the time of registration">🔄 Re-sync Drive</button>
+      <button class="btn-nav-sm" onclick="resetAllLocalData()" title="Clear all local data and start fresh" style="border-color:rgba(216,64,64,.5);color:#ffaaaa;">🗑 Reset My Data</button>
+      <button class="btn-logout" onclick="doLogout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="dash-body">
+    <aside class="sidebar">
+      <div class="sidebar-section" style="margin-top:.5rem">Profile</div>
+      <a class="sidebar-item" id="tab-personal" onclick="showSection('personal')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>Personal & Bio
+      </a>
+      <a class="sidebar-item locked" id="tab-credentials" onclick="showSection('credentials')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 10h8M8 14h5"/></svg>Credentials & Degrees<span class="lock-icon">🔒</span>
+      </a>
+      <a class="sidebar-item locked" id="tab-experience" onclick="showSection('experience')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>Experience<span class="lock-icon">🔒</span>
+      </a>
+      <div class="sidebar-section">Research</div>
+      <a class="sidebar-item locked" id="tab-publications" onclick="showSection('publications')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h6"/></svg>Publications<span class="lock-icon">🔒</span>
+      </a>
+      <a class="sidebar-item locked" id="tab-patents" onclick="showSection('patents')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>Patents<span class="lock-icon">🔒</span>
+      </a>
+      <a class="sidebar-item locked" id="tab-projects" onclick="showSection('projects')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg>Research Projects<span class="lock-icon">🔒</span>
+      </a>
+      <a class="sidebar-item locked" id="tab-awards" onclick="showSection('awards')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="5"/><path d="M8 13l-2 8 6-3 6 3-2-8"/></svg>Awards<span class="lock-icon">🔒</span>
+      </a>
+      <div class="sidebar-section">Academic</div>
+      <a class="sidebar-item locked" id="tab-events" onclick="showSection('events')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Conferences & Events<span class="lock-icon">🔒</span>
+      </a>
+      <a class="sidebar-item locked" id="tab-fdp" onclick="showSection('fdp')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 4.5V12c0 5-3.5 9.7-9 11C6.5 21.7 3 17 3 12V7.5L12 3z"/></svg>FDP / FIP / Refresher<span class="lock-icon">🔒</span>
+      </a>
+      <a class="sidebar-item locked" id="tab-talks" onclick="showSection('talks')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Lectures & Keynotes<span class="lock-icon">🔒</span>
+      </a>
+      <a class="sidebar-item locked" id="tab-summary" onclick="showSection('summary')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>Summary & PDF<span class="lock-icon">🔒</span>
+      </a>
+
+      <div class="sidebar-pdf">
+        <button class="btn-pdf" id="quick-pdf-btn" onclick="generatePDF()" disabled>
+          📄 Generate PDF Report
+        </button>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="progress-label"><span>Profile Completion</span><span id="prog-pct" style="font-weight:600;color:var(--accent)">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="status-banner info" id="drive-banner">
+        📁 Google Drive not configured. Click <strong>⚙ Drive Config</strong> in the top bar to connect.
+      </div>
+
+      <!-- ── PERSONAL ── -->
+      <div class="section-panel active" id="sec-personal">
+        <div class="section-header"><h2>📋 Personal Details & Biography</h2><p>Step 1 of 11 — Fill and save to unlock the next section</p></div>
+        <div class="save-strip"><p>Save to unlock <strong>Credentials & Degrees</strong></p><div class="save-strip-btns"><button class="btn-reset" onclick="resetSection('personal')">↺ Reset</button><button class="btn-save" onclick="saveSection('personal')">Save & Unlock Next →</button></div></div>
+        <div class="card">
+          <div class="card-title">Profile Photo</div>
+          <div class="photo-area">
+            <div class="photo-circle" onclick="triggerPhotoUpload()">
+              <img id="photo-preview" src="" alt="" style="display:none"/>
+              <div class="photo-placeholder" id="photo-ph">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                <div>Upload photo</div>
+              </div>
+            </div>
+            <div>
+              <button class="btn-add" onclick="triggerPhotoUpload()">Choose Photo</button>
+              <p style="font-size:.73rem;color:var(--muted);margin-top:.4rem">JPG/PNG, max 2MB. Passport size recommended.</p>
+              <input type="file" id="photo-input" accept="image/*" onchange="previewPhoto(this)" style="display:none"/>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Basic Information</div>
+          <div class="form-row cols3">
+            <div class="fg"><label>Title</label><select id="p-title"><option>Dr.</option><option>Prof.</option><option>Mr.</option><option>Ms.</option><option>Mrs.</option></select></div>
+            <div class="fg"><label>First Name *</label><input type="text" id="p-fname" placeholder="First name"/></div>
+            <div class="fg"><label>Last Name *</label><input type="text" id="p-lname" placeholder="Last name"/></div>
+          </div>
+          <div class="form-row cols2">
+            <div class="fg"><label>Designation *</label><input type="text" id="p-desig" placeholder="e.g. Associate Professor"/></div>
+            <div class="fg"><label>Department *</label><input type="text" id="p-dept" placeholder="e.g. Computer Science"/></div>
+          </div>
+          <div class="form-row cols2">
+            <div class="fg"><label>School / Faculty</label><input type="text" id="p-school" placeholder="e.g. School of Engineering"/></div>
+            <div class="fg"><label>Employee ID</label><input type="text" id="p-empid" placeholder="JU-XXXXX"/></div>
+          </div>
+          <div class="form-row cols2">
+            <div class="fg"><label>Date of Joining</label><input type="date" id="p-doj"/></div>
+            <div class="fg"><label>Phone</label><input type="tel" id="p-phone" placeholder="+91 XXXXX XXXXX"/></div>
+          </div>
+          <div class="form-row"><div class="fg"><label>ORCID ID</label><input type="text" id="p-orcid" placeholder="0000-0000-0000-0000"/></div></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Academic Biography</div>
+          <div class="fg"><label>Short Biography *</label><textarea id="p-bio" rows="5" placeholder="Write a 150–300 word academic biography…"></textarea><span class="hint">Write in third person. This will appear on the university website.</span></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Research Interests & Expertise</div>
+          <div class="fg"><label>Research Areas (comma-separated)</label><input type="text" id="p-research-areas" placeholder="e.g. Machine Learning, NLP, Computer Vision"/></div>
+          <div class="fg" style="margin-top:.7rem"><label>Teaching Subjects</label><input type="text" id="p-teaching" placeholder="e.g. Data Structures, Algorithms, DBMS"/></div>
+        </div>
+      </div>
+
+      <!-- ── CREDENTIALS ── -->
+      <div class="section-panel" id="sec-credentials">
+        <div class="section-header"><h2>🎓 Credentials & Degrees</h2><p>Step 2 of 11 — PhD, NET/SET, and academic degrees</p></div>
+        <div class="save-strip"><p>Stored under <code>Credentials/</code> in Drive</p><div class="save-strip-btns"><button class="btn-reset" onclick="resetSection('credentials')">↺ Reset</button><button class="btn-save" onclick="saveSection('credentials')">Save & Unlock Next →</button></div></div>
+        <div class="card">
+          <div class="card-title">Educational Qualifications</div>
+          <div id="quals-list" class="dynamic-list"></div>
+          <button class="btn-add" onclick="addQual()">Add Qualification</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Certificate Uploads</div>
+          <div class="form-row cols2">
+            <div class="fg"><label>PhD Certificate</label>
+              <div class="upload-zone" onclick="triggerUpload('phd-cert')"><div class="uz-icon">📄</div><p>Click to upload PDF/Image</p><div class="uz-name" id="phd-cert-name"></div></div>
+              <input type="file" id="phd-cert" accept=".pdf,image/*" onchange="showFileName(this,'phd-cert-name')" style="display:none"/>
+            </div>
+            <div class="fg"><label>NET / SET Certificate</label>
+              <div class="upload-zone" onclick="triggerUpload('netset-cert')"><div class="uz-icon">📄</div><p>Click to upload PDF/Image</p><div class="uz-name" id="netset-cert-name"></div></div>
+              <input type="file" id="netset-cert" accept=".pdf,image/*" onchange="showFileName(this,'netset-cert-name')" style="display:none"/>
+            </div>
+          </div>
+          <div class="form-row cols2">
+            <div class="fg"><label>Additional Certificates</label>
+              <div class="upload-zone" onclick="triggerUpload('extra-certs')"><div class="uz-icon">📚</div><p>Upload multiple files</p></div>
+              <input type="file" id="extra-certs" accept=".pdf,image/*" multiple onchange="showMultiFiles(this,'extra-list')" style="display:none"/>
+              <div class="file-list" id="extra-list"></div>
+            </div>
+            <div class="fg"><label>Offer Letter / Appointment</label>
+              <div class="upload-zone" onclick="triggerUpload('offer-doc')"><div class="uz-icon">📄</div><p>Click to upload PDF</p><div class="uz-name" id="offer-doc-name"></div></div>
+              <input type="file" id="offer-doc" accept=".pdf" onchange="showFileName(this,'offer-doc-name')" style="display:none"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── EXPERIENCE ── -->
+      <div class="section-panel" id="sec-experience">
+        <div class="section-header"><h2>💼 Experience</h2><p>Step 3 of 11 — Teaching, Industry & Research Project experience</p></div>
+        <div class="save-strip"><p>Stored under <code>Experience/</code> in Drive</p><div class="save-strip-btns"><button class="btn-reset" onclick="resetSection('experience')">↺ Reset</button><button class="btn-save" onclick="saveSection('experience')">Save & Unlock Next →</button></div></div>
+
+        <!-- TEACHING -->
+        <div class="card">
+          <div class="card-title">🏫 Teaching Experience</div>
+          <div id="exp-teaching-list" class="dynamic-list"></div>
+          <button class="btn-add" onclick="addTeachingExp()">+ Add Teaching Experience</button>
+        </div>
+
+        <!-- INDUSTRY -->
+        <div class="card">
+          <div class="card-title">🏢 Industry Experience</div>
+          <div id="exp-industry-list" class="dynamic-list"></div>
+          <button class="btn-add" onclick="addIndustryExp()">+ Add Industry Experience</button>
+        </div>
+
+        <!-- RESEARCH PROJECT -->
+        <div class="card">
+          <div class="card-title">🔬 Research Project Experience</div>
+          <div id="exp-research-list" class="dynamic-list"></div>
+          <button class="btn-add" onclick="addResearchExp()">+ Add Research Project Experience</button>
+        </div>
+
+        <!-- TOTAL EXPERIENCE CALCULATOR -->
+        <div class="card" style="background:linear-gradient(135deg,#f0f4ff,#e8ecff);border:1.5px solid var(--accent2)">
+          <div class="card-title">🧮 Calculate Total Experience</div>
+          <p style="font-size:.84rem;color:var(--muted);margin-bottom:1rem">Automatically calculated from your entries above based on joining and leaving dates.</p>
+          <button class="btn-add" style="background:var(--accent);color:#fff;margin-bottom:1rem" onclick="calcTotalExperience()">⟳ Calculate Total Experience</button>
+          <div id="exp-total-result" style="display:none">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:.5rem">
+              <div style="background:#fff;border-radius:10px;padding:1rem;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+                <div style="font-size:.75rem;color:var(--muted);margin-bottom:.3rem">Teaching Experience</div>
+                <div id="exp-total-teaching" style="font-size:1.3rem;font-weight:700;color:var(--navy)">—</div>
+              </div>
+              <div style="background:#fff;border-radius:10px;padding:1rem;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+                <div style="font-size:.75rem;color:var(--muted);margin-bottom:.3rem">Industry Experience</div>
+                <div id="exp-total-industry" style="font-size:1.3rem;font-weight:700;color:var(--navy)">—</div>
+              </div>
+              <div style="background:#fff;border-radius:10px;padding:1rem;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+                <div style="font-size:.75rem;color:var(--muted);margin-bottom:.3rem">Research Experience</div>
+                <div id="exp-total-research" style="font-size:1.3rem;font-weight:700;color:var(--navy)">—</div>
+              </div>
+            </div>
+            <div style="background:var(--navy);color:#fff;border-radius:10px;padding:1rem;text-align:center;margin-top:1rem">
+              <div style="font-size:.8rem;opacity:.7;margin-bottom:.2rem">Total Combined Experience</div>
+              <div id="exp-total-combined" style="font-size:1.6rem;font-weight:700">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PUBLICATIONS ── -->
+      <div class="section-panel" id="sec-publications">
+        <div class="section-header"><h2>📰 Publications</h2><p>Step 4 of 11 — Journals, Books, Chapters & Conference Proceedings</p></div>
+        <div class="save-strip"><p>Stored under <code>Publications/</code> in Drive</p><div class="save-strip-btns"><button class="btn-reset" onclick="resetSection('publications')">↺ Reset</button><button class="btn-save" onclick="saveSection('publications')">Save & Unlock Next →</button></div></div>
+
+        <!-- JOURNAL PUBLICATIONS -->
+        <div class="card">
+          <div class="card-title">📄 Journal Publications</div>
+          <div id="pubs-list" class="dynamic-list"></div>
+          <button class="btn-add" onclick="addPub()">+ Add Journal Publication</button>
+        </div>
+
+        <!-- BOOK PUBLICATIONS -->
+        <div class="card">
+          <div class="card-title">📚 Book Publications</div>
+          <div id="books-list" class="dynamic-list"></div>
+          <button class="btn-add" onclick="addBook()">+ Add Book Publication</button>
+        </div>
+
+        <!-- CHAPTER PUBLICATIONS -->
+        <div class="card">
+          <div class="card-title">📑 Chapter Publications</div>
+          <div id="chapters-list" class="dynamic-list"></div>
+          <button class="btn-add" onclick="addChapter()">+ Add Chapter Publication</button>
+        </div>
+
+        <!-- CONFERENCE PROCEEDINGS -->
+        <div class="card">
+          <div class="card-title">🎤 Publications in Conference Proceedings</div>
+          <div id="confproc-list" class="dynamic-list"></div>
+          <button class="btn-add" onclick="addConfProc()">+ Add Conference Proceeding</button>
+        </div>
+      </div>
+
+      <!-- ── PATENTS ── -->
+      <div class="section-panel" id="sec-patents">
+        <div class="section-header"><h2>🔏 Patents</h2><p>Step 5 of 11 — Filed and granted patents</p></div>
+        <div class="save-strip"><p>Stored under <code>Patents/</code> in Drive</p><div class="save-strip-btns"><button class="btn-reset" onclick="resetSection('patents')">↺ Reset</button><button class="btn-save" onclick="saveSection('patents')">Save & Unlock Next →</button></div></div>
+        <div class="card">
+          <div class="card-title">Patent Records</div>
+          <div id="patents-list" class="dynamic-list"></div>
+          <button class="btn-add" onclick="addPatent()">Add Patent</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Upload Patent Documents</div>
+          <div class="upload-zone" onclick="triggerUpload('patent-files')"><div class="uz-icon">🔏</div><p>Upload patent certificates / filing documents</p></div>
+          <input type="file" id="patent-files" accept=".pdf,.doc,.docx,image/*,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple onchange="showMultiFiles(this,'patent-file-list')" style="display:none"/>
+          <div class="file-list" id="patent-file-list"></div>
+        </div>
+      </div>
+
+      <!-- ── PROJECTS ── -->
+      <div class="section-panel" id="sec-projects">
+        <div class="section-header"><h2>🔬 Research Project Grants</h2><p>Step 6 of 11 — Grants from government agencies and funding bodies</p></div>
+        <div class="save-strip"><p>Stored under <code>ResearchProjects/</code> in Drive</p><div class="save-strip-btns"><button class="btn-reset" onclick="resetSection('projects')">↺ Reset</button><button class="btn-save" onclick="saveSection('projects')">Save & Unlock Next →</button></div></div>
+        <div class="card">
+          <div class="card-title">Funded Research Projects</div>
+          <div id="projects-list" class="dynamic-list"></div>
+          <button class="btn-add" onclick="addProject()">Add Research Project</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Upload Grant Sanction Letters</div>
+          <div class="upload-zone" onclick="triggerUpload('project-files')"><div class="uz-icon">📋</div><p>Upload sanction letters / completion reports</p></div>
+          <input type="file" id="project-files" accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple onchange="showMultiFiles(this,'project-file-list')" style="display:none"/>
+          <div class="file-list" id="project-file-list"></div>
+        </div>
+      </div>
+
+      <!-- ── AWARDS ── -->
+      <div class="section-panel" id="sec-awards">
+        <div class="section-header"><h2>🏆 Awards & Recognitions</h2><p>Step 7 of 11 — Research awards, fellowships, and honours</p></div>
+        <div class="save-strip"><p>Stored under <code>Awards/</code> in Drive</p><div class="save-strip-btns"><button class="btn-reset" onclick="resetSection('awards')">↺ Reset</button><button class="btn-save" onclick="saveSection('awards')">Save & Unlock Next →</button></div></div>
+        <div class="card">
+          <div class="card-title">Awards Received</div>
+          <div id="awards-list" class="dynamic-list"></div>
+          <button class="btn-add" onclick="addAward()">Add Award</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Upload Award Certificates</div>
+          <div class="upload-zone" onclick="triggerUpload('award-files')"><div class="uz-icon">🏆</div><p>Upload award certificates</p></div>
+          <input type="file" id="award-files" accept=".pdf,.doc,.docx,image/*,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple onchange="showMultiFiles(this,'award-file-list')" style="display:none"/>
+          <div class="file-list" id="award-file-list"></div>
+        </div>
+      </div>
+
+      <!-- ── EVENTS ── -->
+      <div class="section-panel" id="sec-events">
+        <div class="section-header"><h2>🎫 Conferences, Seminars & Workshops</h2><p>Step 8 of 11 — Attended and organised events</p></div>
+        <div class="save-strip"><p>Stored under <code>Events/</code> in Drive</p><div class="save-strip-btns"><button class="btn-reset" onclick="resetSection('events')">↺ Reset</button><button class="btn-save" onclick="saveSection('events')">Save & Unlock Next →</button></div></div>
+        <div class="card">
+          <div class="card-title">Events</div>
+          <div id="events-list" class="dynamic-list"></div>
+          <button class="btn-add" onclick="addEvent()">Add Event</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Upload Certificates / Letters</div>
+          <div class="upload-zone" onclick="triggerUpload('event-files')"><div class="uz-icon">🎫</div><p>Upload participation / invitation letters</p></div>
+          <input type="file" id="event-files" accept=".pdf,.doc,.docx,image/*,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple onchange="showMultiFiles(this,'event-file-list')" style="display:none"/>
+          <div class="file-list" id="event-file-list"></div>
+        </div>
+      </div>
+
+      <!-- ── FDP ── -->
+      <div class="section-panel" id="sec-fdp">
+        <div class="section-header"><h2>🛡 FDP / FIP / Refresher Courses</h2><p>Step 9 of 11 — Faculty development programmes</p></div>
+        <div class="save-strip"><p>Stored under <code>FDP/</code> in Drive</p><div class="save-strip-btns"><button class="btn-reset" onclick="resetSection('fdp')">↺ Reset</button><button class="btn-save" onclick="saveSection('fdp')">Save & Unlock Next →</button></div></div>
+        <div class="card">
+          <div class="card-title">Programme Participation</div>
+          <div id="fdp-list" class="dynamic-list"></div>
+          <button class="btn-add" onclick="addFDP()">Add Programme</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Upload Completion Certificates</div>
+          <div class="upload-zone" onclick="triggerUpload('fdp-files')"><div class="uz-icon">🎓</div><p>Upload completion certificates</p></div>
+          <input type="file" id="fdp-files" accept=".pdf,.doc,.docx,image/*,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple onchange="showMultiFiles(this,'fdp-file-list')" style="display:none"/>
+          <div class="file-list" id="fdp-file-list"></div>
+        </div>
+      </div>
+
+      <!-- ── TALKS ── -->
+      <div class="section-panel" id="sec-talks">
+        <div class="section-header"><h2>🎤 Lectures, Keynotes & Session Chair</h2><p>Step 10 of 11 — Guest lectures, keynote addresses, sessions chaired</p></div>
+        <div class="save-strip"><p>Stored under <code>Lectures/</code> in Drive</p><div class="save-strip-btns"><button class="btn-reset" onclick="resetSection('talks')">↺ Reset</button><button class="btn-save" onclick="saveSection('talks')">Save & Unlock Next →</button></div></div>
+        <div class="card">
+          <div class="card-title">Invited Talks & Keynotes</div>
+          <div id="talks-list" class="dynamic-list"></div>
+          <button class="btn-add" onclick="addTalk()">Add Talk / Keynote</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Upload Invitation Letters / Certificates</div>
+          <div class="upload-zone" onclick="triggerUpload('talk-files')"><div class="uz-icon">🎤</div><p>Upload invitation / acknowledgement letters</p></div>
+          <input type="file" id="talk-files" accept=".pdf,.doc,.docx,image/*,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple onchange="showMultiFiles(this,'talk-file-list')" style="display:none"/>
+          <div class="file-list" id="talk-file-list"></div>
+        </div>
+      </div>
+
+      <!-- ── SUMMARY & PDF ── -->
+      <div class="section-panel" id="sec-summary">
+        <div class="section-header"><h2>📄 Summary & PDF Report</h2><p>Step 11 of 11 — Review your profile and generate your official PDF</p></div>
+        <div id="summary-grid" class="summary-grid"></div>
+        <div class="card" style="background:linear-gradient(135deg,#0D1B3E,#1C2D6B);color:#fff;border:none">
+          <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem">
+            <img id="pdf-photo-preview" src="" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.3);display:none"/>
+            <div>
+              <div id="summary-name" style="font-size:1.3rem;font-weight:700;font-family:var(--serif)"></div>
+              <div id="summary-desig" style="font-size:.85rem;opacity:.75;margin-top:.2rem"></div>
+              <div id="summary-dept" style="font-size:.8rem;opacity:.6;margin-top:.1rem"></div>
+            </div>
+          </div>
+          <button class="btn-generate-pdf" id="gen-pdf-btn" onclick="generatePDF()">
+            📄 Generate & Download PDF Profile Report
+          </button>
+          <p style="font-size:.75rem;opacity:.6;text-align:center">The PDF will also be saved to your Google Drive folder</p>
+        </div>
+        <div id="summary-details"></div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- DRIVE CONFIG MODAL -->
+<div class="modal-overlay" id="script-modal">
+  <div class="modal">
+    <h3>🔗 Google Drive Integration</h3>
+    <p>Paste your <strong>Google Apps Script Web App URL</strong> below. Faculty submissions will be posted to your Script, which creates faculty-wise Drive folders and logs registrations.</p>
+    <div class="fg"><label>Apps Script Web App URL</label><input type="url" id="script-url-input" placeholder="https://script.google.com/macros/s/…/exec"/></div>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn-save-sm" onclick="saveScriptUrl()">Save Configuration</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════
+//  STATE & SECTION ORDER
+// ══════════════════════════════════════════════
+let currentUser = null;
+// ─── PASTE YOUR APPS SCRIPT WEB APP URL BETWEEN THE QUOTES BELOW ───
+// After deploying the Apps Script, paste the /exec URL here so all
+// faculty automatically connect to your Drive folder without any config.
+const HARDCODED_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+// ────────────────────────────────────────────────────────────
+// Drive URL priority: hardcoded > localStorage > sessionStorage (never lost)
+function _resolveScriptUrl(){
+  if(HARDCODED_SCRIPT_URL !== 'YOUR_APPS_SCRIPT_URL_HERE') return HARDCODED_SCRIPT_URL;
+  const ls = localStorage.getItem('jain_script_url');
+  if(ls) return ls;
+  const ss = sessionStorage.getItem('jain_script_url');
+  if(ss){ localStorage.setItem('jain_script_url', ss); return ss; }
+  return '';
+}
+let scriptUrl = _resolveScriptUrl();
+let captchaAnswers = {};
+let photoDataURL = '';
+
+const SECTIONS = ['personal','credentials','experience','publications','patents','projects','awards','events','fdp','talks','summary'];
+const SECTION_LABELS = {
+  personal:'Personal & Bio', credentials:'Credentials', experience:'Experience',
+  publications:'Publications',
+  patents:'Patents', projects:'Research Projects', awards:'Awards',
+  events:'Conferences & Events', fdp:'FDP / FIP / Refresher', talks:'Lectures & Keynotes', summary:'Summary & PDF'
+};
+
+function getSavedSections(){
+  if(!currentUser) return [];
+  return SECTIONS.filter(s => s !== 'summary' && !!localStorage.getItem(`jain_data_${currentUser.email}_${s}`));
+}
+
+function unlockTab(section){
+  const el = document.getElementById('tab-'+section);
+  if(!el) return;
+  el.classList.remove('locked');
+  const li = el.querySelector('.lock-icon');
+  if(li) li.remove();
+}
+
+function lockTab(section){
+  const el = document.getElementById('tab-'+section);
+  if(!el) return;
+  if(!el.classList.contains('locked')) el.classList.add('locked');
+  if(!el.querySelector('.lock-icon')){
+    const sp = document.createElement('span');
+    sp.className = 'lock-icon'; sp.textContent = '🔒';
+    el.appendChild(sp);
+  }
+}
+
+function markTabDone(section){
+  const el = document.getElementById('tab-'+section);
+  if(!el) return;
+  el.classList.add('done');
+}
+
+function refreshTabStates(){
+  if(!currentUser) return;
+  const saved = getSavedSections(); // sections with localStorage data (excl. summary)
+
+  // Step through all sections in order
+  // personal is ALWAYS unlocked (first entry point)
+  // each section is unlocked only if the previous one is saved
+  SECTIONS.forEach((s, i) => {
+    if(s === 'summary') return; // handled separately
+
+    if(s === 'personal'){
+      unlockTab('personal');
+      if(saved.includes('personal')) markTabDone('personal');
+    } else {
+      const prev = SECTIONS[i-1];
+      // Unlock this section if previous section has been saved
+      if(saved.includes(prev) || (prev === 'personal' && saved.includes('personal'))){
+        unlockTab(s);
+      }
+      if(saved.includes(s)) markTabDone(s);
+    }
+  });
+
+  // Summary unlocks only when ALL 10 non-summary sections are saved
+  const allDone = saved.length >= (SECTIONS.length - 1); // 10 sections
+  if(allDone) unlockTab('summary');
+}
+
+function updateProgress(){
+  if(!currentUser) return;
+  const saved  = getSavedSections();
+  const total  = SECTIONS.length - 1; // 10 (exclude summary)
+  const pct    = Math.round((saved.length / total) * 100);
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+  const allDone = saved.length >= total;
+  document.getElementById('quick-pdf-btn').disabled = !allDone;
+  if(allDone) unlockTab('summary');
+}
+
+// ══════════════════════════════════════════════
+//  CAPTCHA
+// ══════════════════════════════════════════════
+function genCaptcha(prefix){
+  const a=Math.floor(Math.random()*15)+1, b=Math.floor(Math.random()*15)+1;
+  captchaAnswers[prefix]={a,b,ans:a+b};
+  document.getElementById(prefix+'-captcha-q').textContent=`What is ${a}+${b}?`;
+}
+function refreshCaptcha(p){genCaptcha(p);}
+
+// ══════════════════════════════════════════════
+//  AUTH
+// ══════════════════════════════════════════════
+function showLogin(){
+  document.getElementById('login-form').style.display='';
+  document.getElementById('register-form').style.display='none';
+  genCaptcha('login');
+}
+function showRegister(){
+  document.getElementById('login-form').style.display='none';
+  document.getElementById('register-form').style.display='';
+  genCaptcha('reg');
+}
+function doLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  const pass=document.getElementById('login-password').value;
+  const capAns=parseInt(document.getElementById('login-captcha-ans').value);
+  const err=document.getElementById('login-err');
+  err.textContent='';
+  if(!email){err.textContent='Please enter your email.';return;}
+  if(!pass){err.textContent='Please enter your password.';return;}
+  if(isNaN(capAns)||capAns!==captchaAnswers['login']?.ans){err.textContent='CAPTCHA answer incorrect.';genCaptcha('login');return;}
+  const users=JSON.parse(localStorage.getItem('jain_users')||'{}');
+  const u=users[email];
+  if(!u){err.textContent='Account not found. Please register first.';return;}
+  if(u.password!==btoa(pass)){err.textContent='Incorrect password.';return;}
+  currentUser={...u,email};
+  enterDashboard();
+}
+function doRegister(){
+  const name=document.getElementById('reg-name').value.trim();
+  const email=document.getElementById('reg-email').value.trim();
+  const dept=document.getElementById('reg-dept').value.trim();
+  const empid=document.getElementById('reg-empid').value.trim();
+  const pass=document.getElementById('reg-pass').value;
+  const pass2=document.getElementById('reg-pass2').value;
+  const capAns=parseInt(document.getElementById('reg-captcha-ans').value);
+  const err=document.getElementById('reg-err'); const ok=document.getElementById('reg-ok');
+  err.textContent=''; ok.textContent='';
+  if(!name||!email||!dept||!empid||!pass){err.textContent='Please fill all fields.';return;}
+  if(pass!==pass2){err.textContent='Passwords do not match.';return;}
+  if(pass.length<8){err.textContent='Password must be at least 8 characters.';return;}
+  if(isNaN(capAns)||capAns!==captchaAnswers['reg']?.ans){err.textContent='CAPTCHA answer incorrect.';genCaptcha('reg');return;}
+  const users=JSON.parse(localStorage.getItem('jain_users')||'{}');
+  if(users[email]){
+    // Already registered locally — just re-sync to Drive and log in
+    err.textContent='';
+    ok.textContent='Account exists. Signing you in and re-syncing to Drive…';
+    currentUser={...users[email],email};
+    postToScript({type:'REGISTRATION',name,email,dept,empid,timestamp:new Date().toISOString()});
+    setTimeout(()=>{enterDashboard(); setTimeout(()=>{ if(scriptUrl) resyncToDrive(); },800); },1000);
+    return;
+  }
+  users[email]={name,dept,empid,password:btoa(pass),registered:new Date().toISOString()};
+  localStorage.setItem('jain_users',JSON.stringify(users));
+  postToScript({type:'REGISTRATION',name,email,dept,empid,timestamp:new Date().toISOString()});
+  ok.textContent='✓ Registered successfully! Redirecting…';
+  setTimeout(()=>{currentUser={name,email,dept,empid};enterDashboard();},1200);
+}
+function doLogout(){
+  currentUser=null; photoDataURL='';
+  document.getElementById('dashboard').style.display='none';
+  document.getElementById('auth-screen').style.display='flex';
+  showLogin();
+}
+
+// ══════════════════════════════════════════════
+//  DASHBOARD
+// ══════════════════════════════════════════════
+function enterDashboard(){
+  document.getElementById('auth-screen').style.display='none';
+  document.getElementById('dashboard').style.display='flex';
+  document.getElementById('nav-user-pill').textContent=currentUser.name||currentUser.email;
+  if(currentUser.dept) document.getElementById('p-dept').value=currentUser.dept;
+  if(currentUser.empid) document.getElementById('p-empid').value=currentUser.empid;
+  const parts=(currentUser.name||'').split(' ');
+  if(parts.length>=2){document.getElementById('p-fname').value=parts[1]||'';document.getElementById('p-lname').value=parts.slice(2).join(' ')||'';}
+  if(scriptUrl) document.getElementById('drive-banner').style.display='none';
+  loadSavedData();
+  refreshTabStates();
+  updateProgress();
+  showSection('personal');
+}
+
+function showSection(id){
+  const tab=document.getElementById('tab-'+id);
+  if(tab && tab.classList.contains('locked')){
+    showToast('⚠ Please save the previous section first','red'); return;
+  }
+  document.querySelectorAll('.section-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  document.querySelectorAll('.sidebar-item').forEach(s=>s.classList.remove('active'));
+  if(tab) tab.classList.add('active');
+  if(id==='summary') buildSummaryPage();
+  window.scrollTo(0,0);
+}
+
+// ══════════════════════════════════════════════
+//  DYNAMIC ENTRIES
+// ══════════════════════════════════════════════
+function addQual(){
+  const id='q'+Date.now();
+  document.getElementById('quals-list').insertAdjacentHTML('beforeend',`
+  <div class="dynamic-entry" id="${id}">
+    <button class="del-btn" onclick="delEntry('${id}')">Remove</button>
+    <div class="form-row cols3">
+      <div class="fg"><label>Degree</label><select><option>Ph.D.</option><option>M.Tech/M.E.</option><option>M.Sc</option><option>MBA</option><option>B.Tech/B.E.</option><option>M.Phil</option><option>Other</option></select></div>
+      <div class="fg"><label>Specialisation</label><input type="text" placeholder="e.g. Computer Science"/></div>
+      <div class="fg"><label>Year</label><input type="number" placeholder="2018" min="1950" max="2030"/></div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Institution</label><input type="text" placeholder="University name"/></div>
+      <div class="fg"><label>Exam Cleared</label>
+        <div class="tag-select">
+          <span class="tag" onclick="this.classList.toggle('selected')">UGC-NET</span>
+          <span class="tag" onclick="this.classList.toggle('selected')">CSIR-NET</span>
+          <span class="tag" onclick="this.classList.toggle('selected')">SET/SLET</span>
+          <span class="tag" onclick="this.classList.toggle('selected')">GATE</span>
+          <span class="tag" onclick="this.classList.toggle('selected')">N/A</span>
+        </div>
+      </div>
+    </div>
+  </div>`);}
+
+function addPub(){
+  const id='p'+Date.now();
+  document.getElementById('pubs-list').insertAdjacentHTML('beforeend',`
+  <div class="dynamic-entry" id="${id}">
+    <button class="del-btn" onclick="delEntry('${id}')">Remove</button>
+    <div class="form-row cols2">
+      <div class="fg"><label>Title of Paper</label><input type="text" placeholder="Full title"/></div>
+      <div class="fg"><label>Journal Name</label><input type="text" placeholder="Journal name"/></div>
+    </div>
+    <div class="form-row cols3">
+      <div class="fg"><label>Year</label><input type="number" placeholder="2024" min="1980" max="2030"/></div>
+      <div class="fg"><label>Volume / Issue</label><input type="text" placeholder="Vol. X, No. Y"/></div>
+      <div class="fg"><label>Pages</label><input type="text" placeholder="pp. 100-110"/></div>
+    </div>
+    <div class="form-row cols3">
+      <div class="fg"><label>ISSN</label><input type="text" placeholder="e.g. 1234-5678"/></div>
+      <div class="fg"><label>DOI / URL</label><input type="text" placeholder="https://doi.org/…"/></div>
+      <div class="fg"><label>Impact Factor</label><input type="number" step="0.001" placeholder="e.g. 3.456"/></div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Indexing</label>
+        <div class="tag-select">
+          <span class="tag" onclick="this.classList.toggle('selected')">Scopus</span>
+          <span class="tag" onclick="this.classList.toggle('selected')">WoS</span>
+          <span class="tag" onclick="this.classList.toggle('selected')">UGC-Care</span>
+          <span class="tag" onclick="this.classList.toggle('selected')">Peer-reviewed</span>
+        </div>
+      </div>
+      <div class="fg"><label>Co-authors</label><input type="text" placeholder="Comma-separated names"/></div>
+    </div>
+    <div style="margin-top:.75rem;padding-top:.75rem;border-top:1px dashed var(--border)">
+      <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:.4rem">📎 Upload Reprint / Proof of Acceptance</label>
+      <input type="file" accept=".pdf,.doc,.docx,image/*" onchange="showInlineFile(this)" style="font-size:.82rem"/>
+      <div class="inline-file-preview"></div>
+    </div>
+  </div>`);}
+
+function addBook(){
+  const id='bk'+Date.now();
+  document.getElementById('books-list').insertAdjacentHTML('beforeend',`
+  <div class="dynamic-entry" id="${id}">
+    <button class="del-btn" onclick="delEntry('${id}')">Remove</button>
+    <div class="form-row cols2">
+      <div class="fg"><label>Title of the Book</label><input type="text" placeholder="Full book title"/></div>
+      <div class="fg"><label>Type of Book</label>
+        <select><option>Authored</option><option>Edited</option></select>
+      </div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Publisher</label><input type="text" placeholder="Publisher name"/></div>
+      <div class="fg"><label>Type of Publication</label>
+        <select><option>National</option><option>International</option></select>
+      </div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Year of Publication</label><input type="text" placeholder="e.g. 2023"/></div>
+      <div class="fg"><label>ISBN</label><input type="text" placeholder="e.g. 978-0-000-00000-0"/></div>
+    </div>
+    <div style="margin-top:.75rem;padding-top:.75rem;border-top:1px dashed var(--border)">
+      <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:.4rem">📎 Upload Book / Proof</label>
+      <input type="file" accept=".pdf,.doc,.docx,image/*" onchange="showInlineFile(this)" style="font-size:.82rem"/>
+      <div class="inline-file-preview"></div>
+    </div>
+  </div>`);}
+
+function addChapter(){
+  const id='ch'+Date.now();
+  document.getElementById('chapters-list').insertAdjacentHTML('beforeend',`
+  <div class="dynamic-entry" id="${id}">
+    <button class="del-btn" onclick="delEntry('${id}')">Remove</button>
+    <div class="form-row cols2">
+      <div class="fg"><label>Title of the Chapter</label><input type="text" placeholder="Full chapter title"/></div>
+      <div class="fg"><label>Title of the Book</label><input type="text" placeholder="Book in which chapter appears"/></div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Publisher</label><input type="text" placeholder="Publisher name"/></div>
+      <div class="fg"><label>Type of Publication</label>
+        <select><option>National</option><option>International</option></select>
+      </div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Year of Publication</label><input type="text" placeholder="e.g. 2023"/></div>
+      <div class="fg"><label>ISBN</label><input type="text" placeholder="e.g. 978-0-000-00000-0"/></div>
+    </div>
+    <div style="margin-top:.75rem;padding-top:.75rem;border-top:1px dashed var(--border)">
+      <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:.4rem">📎 Upload Chapter / Proof</label>
+      <input type="file" accept=".pdf,.doc,.docx,image/*" onchange="showInlineFile(this)" style="font-size:.82rem"/>
+      <div class="inline-file-preview"></div>
+    </div>
+  </div>`);}
+
+function addConfProc(){
+  const id='cp'+Date.now();
+  document.getElementById('confproc-list').insertAdjacentHTML('beforeend',`
+  <div class="dynamic-entry" id="${id}">
+    <button class="del-btn" onclick="delEntry('${id}')">Remove</button>
+    <div class="form-row cols2">
+      <div class="fg"><label>Title of the Paper</label><input type="text" placeholder="Full paper title"/></div>
+      <div class="fg"><label>Name of the Conference</label><input type="text" placeholder="Full conference name"/></div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Organizer</label><input type="text" placeholder="Organizing institution / body"/></div>
+      <div class="fg"><label>Type of Conference</label>
+        <select><option>National</option><option>International</option><option>Regional</option></select>
+      </div>
+    </div>
+    <div class="form-row cols3">
+      <div class="fg"><label>Date (From)</label><input type="date"/></div>
+      <div class="fg"><label>Date (To)</label><input type="date"/></div>
+      <div class="fg"><label>Year</label><input type="text" placeholder="e.g. 2024"/></div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>ISBN</label><input type="text" placeholder="e.g. 978-0-000-00000-0"/></div>
+      <div class="fg"><label>DOI / URL</label><input type="text" placeholder="https://doi.org/…"/></div>
+    </div>
+    <div style="margin-top:.75rem;padding-top:.75rem;border-top:1px dashed var(--border)">
+      <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:.4rem">📎 Upload Paper / Certificate</label>
+      <input type="file" accept=".pdf,.doc,.docx,image/*" onchange="showInlineFile(this)" style="font-size:.82rem"/>
+      <div class="inline-file-preview"></div>
+    </div>
+  </div>`);}
+
+function addPatent(){
+  const id='pt'+Date.now();
+  document.getElementById('patents-list').insertAdjacentHTML('beforeend',`
+  <div class="dynamic-entry" id="${id}">
+    <button class="del-btn" onclick="delEntry('${id}')">Remove</button>
+    <div class="form-row cols2">
+      <div class="fg"><label>Title of Invention</label><input type="text" placeholder="Patent title"/></div>
+      <div class="fg"><label>Application Number</label><input type="text" placeholder="e.g. IN202141012345"/></div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Status</label><select><option>Filed</option><option>Published</option><option>Granted</option><option>Abandoned</option></select></div>
+      <div class="fg"><label>Country / Office</label><select><option>India (IPO)</option><option>USA (USPTO)</option><option>Europe (EPO)</option><option>International (PCT)</option><option>Other</option></select></div>
+    </div>
+    <div class="form-row cols3">
+      <div class="fg"><label>Filing Date</label><input type="date"/></div>
+      <div class="fg"><label>Publication Date</label><input type="date"/></div>
+      <div class="fg"><label>Grant Date</label><input type="date"/></div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Co-inventors</label><input type="text" placeholder="Names of co-inventors"/></div>
+      <div class="fg"><label>Patent Office Reference / URL</label><input type="text" placeholder="https://ipindiaservices.gov.in/…"/></div>
+    </div>
+    <div style="margin-top:.75rem;padding-top:.75rem;border-top:1px dashed var(--border)">
+      <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:.4rem">📎 Upload Certificate / Document</label>
+      <input type="file" accept=".pdf,.doc,.docx,image/*" onchange="showInlineFile(this)" style="font-size:.82rem"/>
+      <div class="inline-file-preview"></div>
+    </div>
+  </div>`);}
+
+function addProject(){
+  const id='pr'+Date.now();
+  document.getElementById('projects-list').insertAdjacentHTML('beforeend',`
+  <div class="dynamic-entry" id="${id}">
+    <button class="del-btn" onclick="delEntry('${id}')">Remove</button>
+    <div class="form-row cols2">
+      <div class="fg"><label>Project Title</label><input type="text" placeholder="Full project title"/></div>
+      <div class="fg"><label>Funding Agency</label><input type="text" placeholder="e.g. DST, DBT, SERB, ICMR, CSIR, AICTE, UGC"/></div>
+    </div>
+    <div class="form-row cols3">
+      <div class="fg"><label>Scheme</label><input type="text" placeholder="e.g. TARE, CRG, NPDF"/></div>
+      <div class="fg"><label>Grant Amount (₹)</label><input type="number" placeholder="e.g. 1500000"/></div>
+      <div class="fg"><label>Role</label><select><option>Principal Investigator</option><option>Co-Investigator</option><option>Collaborator</option></select></div>
+    </div>
+    <div class="form-row cols3">
+      <div class="fg"><label>Start Date</label><input type="date"/></div>
+      <div class="fg"><label>End Date</label><input type="date"/></div>
+      <div class="fg"><label>Status</label><select><option>Ongoing</option><option>Completed</option><option>Sanctioned</option></select></div>
+    </div>
+  </div>`);}
+
+function addAward(){
+  const id='aw'+Date.now();
+  document.getElementById('awards-list').insertAdjacentHTML('beforeend',`
+  <div class="dynamic-entry" id="${id}">
+    <button class="del-btn" onclick="delEntry('${id}')">Remove</button>
+    <div class="form-row cols2">
+      <div class="fg"><label>Award Title</label><input type="text" placeholder="e.g. Best Researcher Award"/></div>
+      <div class="fg"><label>Awarding Body</label><input type="text" placeholder="e.g. DST, IEEE, JAIN University"/></div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Year</label><input type="number" placeholder="2023" min="1980" max="2030"/></div>
+      <div class="fg"><label>Category</label><select><option>Best Paper</option><option>Research Excellence</option><option>Fellowship</option><option>Academic Achievement</option><option>Other</option></select></div>
+    </div>
+    <div class="fg"><label>Description</label><textarea rows="2" placeholder="Brief description"></textarea></div>
+  </div>`);}
+
+function addEvent(){
+  const id='ev'+Date.now();
+  document.getElementById('events-list').insertAdjacentHTML('beforeend',`
+  <div class="dynamic-entry" id="${id}">
+    <button class="del-btn" onclick="delEntry('${id}')">Remove</button>
+    <div class="form-row cols2">
+      <div class="fg"><label>Event Title</label><input type="text" placeholder="Conference / Seminar / Workshop name"/></div>
+      <div class="fg"><label>Organising Body</label><input type="text" placeholder="Institution / Society"/></div>
+    </div>
+    <div class="form-row cols3">
+      <div class="fg"><label>Type</label><select><option>Conference</option><option>Seminar</option><option>Workshop</option><option>Symposium</option><option>Webinar</option></select></div>
+      <div class="fg"><label>Date(s)</label><input type="text" placeholder="e.g. 12-14 March 2024"/></div>
+      <div class="fg"><label>Venue / Mode</label><input type="text" placeholder="City / Online"/></div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Your Role</label>
+        <div class="tag-select">
+          <span class="tag" onclick="this.classList.toggle('selected')">Attendee</span>
+          <span class="tag" onclick="this.classList.toggle('selected')">Presenter</span>
+          <span class="tag" onclick="this.classList.toggle('selected')">Organiser</span>
+          <span class="tag" onclick="this.classList.toggle('selected')">Session Chair</span>
+          <span class="tag" onclick="this.classList.toggle('selected')">Keynote Speaker</span>
+          <span class="tag" onclick="this.classList.toggle('selected')">Invited Speaker</span>
+        </div>
+      </div>
+      <div class="fg"><label>Paper / Presentation Title</label><input type="text" placeholder="Title presented (if any)"/></div>
+    </div>
+  </div>`);}
+
+function addFDP(){
+  const id='fd'+Date.now();
+  document.getElementById('fdp-list').insertAdjacentHTML('beforeend',`
+  <div class="dynamic-entry" id="${id}">
+    <button class="del-btn" onclick="delEntry('${id}')">Remove</button>
+    <div class="form-row cols2">
+      <div class="fg"><label>Programme Title</label><input type="text" placeholder="FDP / FIP / Refresher title"/></div>
+      <div class="fg"><label>Organising Institution</label><input type="text" placeholder="Institution / HRDC / IUCEE"/></div>
+    </div>
+    <div class="form-row cols3">
+      <div class="fg"><label>Type</label><select><option>FDP</option><option>FIP</option><option>Refresher Course</option><option>Orientation Programme</option><option>Short-term Course</option></select></div>
+      <div class="fg"><label>Duration</label><input type="text" placeholder="e.g. 2 weeks / 6 days"/></div>
+      <div class="fg"><label>Year</label><input type="number" placeholder="2024" min="1990" max="2030"/></div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Sponsoring Body</label><input type="text" placeholder="e.g. UGC-HRDC, AICTE, TEQIP"/></div>
+      <div class="fg"><label>Your Role</label>
+        <div class="tag-select">
+          <span class="tag" onclick="this.classList.toggle('selected')">Participant</span>
+          <span class="tag" onclick="this.classList.toggle('selected')">Resource Person</span>
+          <span class="tag" onclick="this.classList.toggle('selected')">Organiser</span>
+          <span class="tag" onclick="this.classList.toggle('selected')">Coordinator</span>
+        </div>
+      </div>
+    </div>
+  </div>`);}
+
+function addTalk(){
+  const id='tk'+Date.now();
+  document.getElementById('talks-list').insertAdjacentHTML('beforeend',`
+  <div class="dynamic-entry" id="${id}">
+    <button class="del-btn" onclick="delEntry('${id}')">Remove</button>
+    <div class="form-row cols2">
+      <div class="fg"><label>Topic / Title</label><input type="text" placeholder="Title of talk or lecture"/></div>
+      <div class="fg"><label>Inviting Institution / Event</label><input type="text" placeholder="Who invited you"/></div>
+    </div>
+    <div class="form-row cols3">
+      <div class="fg"><label>Type</label><select><option>Guest Lecture</option><option>Keynote Address</option><option>Invited Talk</option><option>Session Chair</option><option>Panel Discussion</option></select></div>
+      <div class="fg"><label>Date</label><input type="date"/></div>
+      <div class="fg"><label>Mode</label><select><option>In-person</option><option>Online</option></select></div>
+    </div>
+    <div class="fg"><label>Brief Description</label><textarea rows="2" placeholder="Brief description or abstract"></textarea></div>
+  </div>`);}
+
+function addTeachingExp(){
+  const id='te'+Date.now();
+  document.getElementById('exp-teaching-list').insertAdjacentHTML('beforeend',`
+  <div class="dynamic-entry" id="${id}">
+    <button class="del-btn" onclick="delEntry('${id}')">Remove</button>
+    <div class="form-row cols2">
+      <div class="fg"><label>Name of the Institution</label><input type="text" placeholder="Full institution name"/></div>
+      <div class="fg"><label>Position Held</label>
+        <select>
+          <option>Assistant Professor</option>
+          <option>Associate Professor</option>
+          <option>Professor</option>
+          <option>Teaching Assistant</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Nature of Appointment</label>
+        <select>
+          <option>Regular</option>
+          <option>Contractual</option>
+          <option>Guest</option>
+        </select>
+      </div>
+      <div class="fg"><label>Job Responsibilities</label>
+        <select>
+          <option>Teaching</option>
+          <option>Research</option>
+          <option>Administrative</option>
+          <option>All</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row cols3">
+      <div class="fg"><label>Date of Joining</label><input type="date" class="te-doj"/></div>
+      <div class="fg te-dol-wrap">
+        <label>Date of Leaving</label>
+        <input type="date" class="te-dol"/>
+      </div>
+      <div class="fg" style="justify-content:flex-end;padding-top:1.2rem">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:.82rem">
+          <input type="checkbox" class="te-present" onchange="togglePresent(this)"/> Presently Working Here
+        </label>
+      </div>
+    </div>
+    <div style="margin-top:.75rem;padding-top:.75rem;border-top:1px dashed var(--border)">
+      <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:.4rem">📎 Upload Experience Letter / Certificate</label>
+      <input type="file" accept=".pdf,.doc,.docx,image/*" onchange="showInlineFile(this)" style="font-size:.82rem"/>
+      <div class="inline-file-preview"></div>
+    </div>
+  </div>`);}
+
+
+// ── Inline file preview per entry ──
+function showInlineFile(input){
+  const preview = input.nextElementSibling;
+  preview.innerHTML = '';
+  if(!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  const div = document.createElement('div');
+  div.style.cssText = 'margin-top:.4rem;font-size:.8rem;color:var(--success);display:flex;align-items:center;gap:6px;';
+  div.innerHTML = '✅ <strong>' + file.name + '</strong> (' + (file.size > 1024*1024 ? (file.size/1024/1024).toFixed(1)+'MB' : (file.size/1024).toFixed(0)+'KB') + ') — will be uploaded on Save';
+  preview.appendChild(div);
+}
+
+// ── Calculate Total Experience from date entries ──
+function calcTotalExperience(){
+  function sumDays(listId, dojClass, dolClass, presentClass){
+    let total = 0;
+    const entries = document.querySelectorAll('#'+listId+' .dynamic-entry');
+    entries.forEach(e => {
+      const doj = e.querySelector('.'+dojClass);
+      const dol = e.querySelector('.'+dolClass);
+      const present = e.querySelector('.'+presentClass);
+      if(!doj || !doj.value) return;
+      const start = new Date(doj.value);
+      const end = (present && present.checked) ? new Date() : (dol && dol.value ? new Date(dol.value) : null);
+      if(!end || end < start) return;
+      total += (end - start);
+    });
+    return total;
+  }
+  function msToDuration(ms){
+    const days = Math.floor(ms / 86400000);
+    const years = Math.floor(days / 365);
+    const months = Math.floor((days % 365) / 30);
+    if(years === 0 && months === 0) return days + ' days';
+    if(years === 0) return months + ' month' + (months !== 1 ? 's' : '');
+    if(months === 0) return years + ' year' + (years !== 1 ? 's' : '');
+    return years + ' yr ' + months + ' mo';
+  }
+  const teachMs = sumDays('exp-teaching-list','te-doj','te-dol','te-present');
+  const indMs   = sumDays('exp-industry-list','ie-doj','ie-dol','te-present');
+  const resMs   = sumDays('exp-research-list','re-doj','re-dol','te-present');
+  document.getElementById('exp-total-teaching').textContent  = msToDuration(teachMs) || '0';
+  document.getElementById('exp-total-industry').textContent  = msToDuration(indMs) || '0';
+  document.getElementById('exp-total-research').textContent  = msToDuration(resMs) || '0';
+  document.getElementById('exp-total-combined').textContent  = msToDuration(teachMs + indMs + resMs) || '0';
+  document.getElementById('exp-total-result').style.display  = 'block';
+}
+
+function togglePresent(cb){
+  const entry=cb.closest('.dynamic-entry');
+  const dolWrap=entry.querySelector('.te-dol-wrap');
+  const dolInput=entry.querySelector('.te-dol');
+  if(cb.checked){
+    dolInput.value='';
+    dolInput.disabled=true;
+    dolInput.style.background='var(--light)';
+    dolInput.placeholder='Presently Working';
+  } else {
+    dolInput.disabled=false;
+    dolInput.style.background='';
+    dolInput.placeholder='';
+  }
+}
+
+function addIndustryExp(){
+  const id='ie'+Date.now();
+  document.getElementById('exp-industry-list').insertAdjacentHTML('beforeend',`
+  <div class="dynamic-entry" id="${id}">
+    <button class="del-btn" onclick="delEntry('${id}')">Remove</button>
+    <div class="form-row cols2">
+      <div class="fg"><label>Name of the Organization</label><input type="text" placeholder="Full organization name"/></div>
+      <div class="fg"><label>Position Held</label><input type="text" placeholder="e.g. Senior Engineer, Manager"/></div>
+    </div>
+    <div class="form-row cols3">
+      <div class="fg"><label>Date of Joining</label><input type="date" class="ie-doj re-doj"/></div>
+      <div class="fg ie-dol-wrap">
+        <label>Date of Leaving</label>
+        <input type="date" class="ie-dol"/>
+      </div>
+      <div class="fg" style="justify-content:flex-end;padding-top:1.2rem">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:.82rem">
+          <input type="checkbox" class="te-present" onchange="togglePresent(this)"/> Presently Working Here
+        </label>
+      </div>
+    </div>
+    <div style="margin-top:.75rem;padding-top:.75rem;border-top:1px dashed var(--border)">
+      <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:.4rem">📎 Upload Experience Letter / Certificate</label>
+      <input type="file" accept=".pdf,.doc,.docx,image/*" onchange="showInlineFile(this)" style="font-size:.82rem"/>
+      <div class="inline-file-preview"></div>
+    </div>
+  </div>`);}
+
+function addResearchExp(){
+  const id='re'+Date.now();
+  document.getElementById('exp-research-list').insertAdjacentHTML('beforeend',`
+  <div class="dynamic-entry" id="${id}">
+    <button class="del-btn" onclick="delEntry('${id}')">Remove</button>
+    <div class="form-row cols2">
+      <div class="fg"><label>Name of the Institution</label><input type="text" placeholder="Full institution name"/></div>
+      <div class="fg"><label>Title of the Project</label><input type="text" placeholder="Full project title"/></div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Funding Agency</label><input type="text" placeholder="e.g. DST, SERB, UGC, CSIR, ICMR"/></div>
+      <div class="fg"><label>Total Grant</label>
+        <select>
+          <option value="">— Select Grant Range —</option>
+          <option>Less than Rs. 5 Lakhs</option>
+          <option>Rs. 5–10 Lakhs</option>
+          <option>More than Rs. 10 Lakhs</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row cols2">
+      <div class="fg"><label>Duration of the Project</label><input type="text" placeholder="e.g. 3 years (2021–2024)"/></div>
+      <div class="fg"><label>Position Held</label>
+        <select class="re-pos" onchange="toggleOtherPos(this)">
+          <option value="">— Select Position —</option>
+          <option>Principal Investigator</option>
+          <option>Co-Principal Investigator</option>
+          <option>Research Associate</option>
+          <option>Research Assistant</option>
+          <option>Other (please specify)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row cols2 re-other-wrap" style="display:none">
+      <div class="fg"><label>Specify Position</label><input type="text" placeholder="Please specify your position"/></div>
+    </div>
+    <div class="form-row cols1">
+      <div class="fg"><label>Collaborating Institution (if any)</label><input type="text" placeholder="Name of collaborating institution(s)"/></div>
+    </div>
+    <div style="margin-top:.75rem;padding-top:.75rem;border-top:1px dashed var(--border)">
+      <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:.4rem">📎 Upload Experience Letter / Certificate</label>
+      <input type="file" accept=".pdf,.doc,.docx,image/*" onchange="showInlineFile(this)" style="font-size:.82rem"/>
+      <div class="inline-file-preview"></div>
+    </div>
+  </div>`);}
+
+function toggleOtherPos(sel){
+  const entry=sel.closest('.dynamic-entry');
+  const otherWrap=entry.querySelector('.re-other-wrap');
+  if(otherWrap) otherWrap.style.display=sel.value==='Other (please specify)'?'':'none';
+}
+
+function delEntry(id){ document.getElementById(id).remove(); }
+
+
+
+// ══════════════════════════════════════════════
+//  FILE HANDLING
+// ══════════════════════════════════════════════
+function triggerUpload(id){document.getElementById(id).click();}
+let _photoLock=false;
+function triggerPhotoUpload(){
+  if(_photoLock)return; _photoLock=true;
+  document.getElementById('photo-input').click();
+  setTimeout(()=>{_photoLock=false;},500);
+}
+function showFileName(input,nameId){
+  const el=document.getElementById(nameId);
+  if(el) el.textContent=input.files[0]?'📎 '+input.files[0].name+' (pending upload)':'';
+}
+function showMultiFiles(input,listId){
+  const list=document.getElementById(listId); if(!list)return;
+  list.innerHTML='';
+  Array.from(input.files).forEach(f=>{
+    list.insertAdjacentHTML('beforeend',`<div class="file-chip" id="chip-${f.name.replace(/\W/g,'_')}"><span>📎 ${f.name}</span><span style="color:var(--muted);font-size:.72rem">${(f.size/1024).toFixed(0)} KB — pending upload</span></div>`);
+  });
+}
+function previewPhoto(input){
+  if(!input.files[0])return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    photoDataURL=e.target.result;
+    document.getElementById('photo-preview').src=e.target.result;
+    document.getElementById('photo-preview').style.display='';
+    document.getElementById('photo-ph').style.display='none';
+    try{ localStorage.setItem(`jain_photo_${currentUser.email}`,e.target.result); }catch(ex){ console.warn('Photo storage full',ex); }
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+// Convert File to base64 string
+function fileToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=e=>resolve(e.target.result.split(',')[1]); // strip data:...;base64,
+    reader.onerror=reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+// Resolve correct MIME type for common file types (especially Word docs)
+function resolveMimeType(file){
+  const name = file.name.toLowerCase();
+  if(name.endsWith('.docx')) return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+  if(name.endsWith('.doc'))  return 'application/msword';
+  if(name.endsWith('.pdf'))  return 'application/pdf';
+  if(name.endsWith('.xlsx')) return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+  if(name.endsWith('.pptx')) return 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+  return file.type || 'application/octet-stream';
+}
+
+// Collect all file inputs in a panel and return array of {name,mimeType,base64,inputId}
+async function collectFiles(panel){
+  const files=[];
+  const fileInputs=panel.querySelectorAll('input[type=file]');
+  for(const input of fileInputs){
+    if(!input.files||input.files.length===0) continue;
+    for(const file of input.files){
+      try{
+        const b64=await fileToBase64(file);
+        files.push({name:file.name, mimeType:resolveMimeType(file), base64:b64, inputId:input.id});
+      }catch(e){ console.warn('File read error',file.name,e); }
+    }
+  }
+  return files;
+}
+
+// ══════════════════════════════════════════════
+//  GOOGLE SCRIPT
+// ══════════════════════════════════════════════
+function showScriptConfig(){
+  document.getElementById('script-url-input').value=scriptUrl;
+  document.getElementById('script-modal').classList.add('open');
+}
+function closeModal(){document.getElementById('script-modal').classList.remove('open');}
+function saveScriptUrl(){
+  const url=document.getElementById('script-url-input').value.trim();
+  if(!url){showToast('Please enter a valid URL','red');return;}
+  scriptUrl=url;
+  localStorage.setItem('jain_script_url',url);
+  sessionStorage.setItem('jain_script_url',url); // backup in session
+  document.getElementById('drive-banner').style.display='none';
+  closeModal(); showToast('Drive integration configured ✓ — URL saved permanently!','green');
+}
+
+// POST JSON data to Apps Script (with CORS)
+async function postToScript(data){
+  if(!scriptUrl)return null;
+  try{
+    const res=await fetch(scriptUrl,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, // text/plain avoids CORS preflight
+      body:JSON.stringify(data)
+    });
+    if(res.ok){
+      try{ return await res.json(); }catch(e){ return null; }
+    }
+  }catch(e){ console.warn('Script post failed:',e); }
+  return null;
+}
+
+// Upload a single file to Drive via Apps Script
+async function uploadFileToDrive(file, section){
+  if(!scriptUrl) return null;
+  const payload={
+    type:'FILE_UPLOAD',
+    section,
+    email:currentUser.email,
+    name:currentUser.name,
+    empid:currentUser.empid,
+    fileName:file.name,
+    mimeType:file.mimeType,
+    base64:file.base64,
+    timestamp:new Date().toISOString()
+  };
+  return await postToScript(payload);
+}
+
+// ══════════════════════════════════════════════
+//  SAVE SECTION
+// ══════════════════════════════════════════════
+async function saveSection(section){
+  const btn=event.target;
+  if(section==='personal'){
+    const fname=document.getElementById('p-fname').value.trim();
+    const lname=document.getElementById('p-lname').value.trim();
+    const desig=document.getElementById('p-desig').value.trim();
+    const dept=document.getElementById('p-dept').value.trim();
+    const bio=document.getElementById('p-bio').value.trim();
+    if(!fname||!lname||!desig||!dept||!bio){
+      showToast('Please fill all required (*) fields before saving','red'); return;
+    }
+  }
+  btn.textContent='Saving…'; btn.disabled=true;
+
+  const panel=document.getElementById('sec-'+section);
+
+  // ── 1. Upload files first ──
+  const filesToUpload=await collectFiles(panel);
+  if(filesToUpload.length>0){
+    btn.textContent=`Uploading ${filesToUpload.length} file(s)…`;
+    let uploaded=0;
+    for(const file of filesToUpload){
+      showToast(`📤 Uploading ${file.name}…`);
+      const result=await uploadFileToDrive(file,section);
+      uploaded++;
+      // Update chip to show uploaded status
+      const chipId='chip-'+file.name.replace(/\W/g,'_');
+      const chip=document.getElementById(chipId);
+      if(chip){
+        const link=result&&result.fileUrl?`<a href="${result.fileUrl}" target="_blank" style="color:var(--success);font-size:.72rem">✓ View in Drive</a>`:'<span style="color:var(--success);font-size:.72rem">✓ Uploaded</span>';
+        chip.innerHTML=`<span>✅ ${file.name}</span>${link}`;
+      }
+      // Also update single-file name displays
+      const nameEl=document.getElementById(file.inputId+'-name');
+      if(nameEl) nameEl.innerHTML=result&&result.fileUrl
+        ?`<a href="${result.fileUrl}" target="_blank" style="color:var(--success)">✅ ${file.name} — View in Drive</a>`
+        :`✅ ${file.name} — uploaded`;
+      btn.textContent=`Uploading ${uploaded}/${filesToUpload.length}…`;
+    }
+  }
+
+  // ── 2. Save form data ──
+  btn.textContent='Saving data…';
+  const formData={type:'FACULTY_DATA',section,email:currentUser.email,name:currentUser.name,empid:currentUser.empid,timestamp:new Date().toISOString()};
+  panel.querySelectorAll('input[type=text],input[type=email],input[type=number],input[type=date],input[type=tel],input[type=url],select,textarea').forEach(el=>{
+    if(el.id&&el.value) formData[el.id]=el.value;
+  });
+  const entries=[];
+  panel.querySelectorAll('.dynamic-entry').forEach(entry=>{
+    const row={};
+    entry.querySelectorAll('input,select,textarea').forEach(el=>{if(el.value) row[el.placeholder||el.id||'val']=el.value;});
+    const tags=[]; entry.querySelectorAll('.tag.selected').forEach(t=>tags.push(t.textContent.trim()));
+    if(tags.length) row.tags=tags.join(', ');
+    entries.push(row);
+  });
+  if(entries.length) formData.entries=entries;
+  await postToScript(formData);
+  localStorage.setItem(`jain_data_${currentUser.email}_${section}`,JSON.stringify(formData));
+
+  btn.textContent='Saved ✓'; btn.style.background='var(--success)';
+  setTimeout(()=>{btn.textContent='Save & Unlock Next →';btn.style.background='';btn.disabled=false;},2500);
+  refreshTabStates();
+  updateProgress();
+  const fileMsg=filesToUpload.length>0?` + ${filesToUpload.length} file(s) uploaded to Drive`:'';
+  showToast(`${SECTION_LABELS[section]} saved ✓${fileMsg} — next section unlocked!`,'green');
+}
+
+// ══════════════════════════════════════════════
+//  LOAD & PROGRESS
+// ══════════════════════════════════════════════
+function loadSavedData(){
+  if(!currentUser)return;
+  SECTIONS.forEach(s=>{
+    const saved=localStorage.getItem(`jain_data_${currentUser.email}_${s}`);
+    if(!saved)return;
+    const data=JSON.parse(saved);
+    Object.keys(data).forEach(k=>{
+      const el=document.getElementById(k);
+      if(el&&el.tagName!=='BUTTON') el.value=data[k];
+    });
+  });
+  const storedPhoto=localStorage.getItem(`jain_photo_${currentUser.email}`);
+  if(storedPhoto){
+    photoDataURL=storedPhoto;
+    document.getElementById('photo-preview').src=storedPhoto;
+    document.getElementById('photo-preview').style.display='';
+    document.getElementById('photo-ph').style.display='none';
+  }
+}
+// ══════════════════════════════════════════════
+//  SUMMARY PAGE
+// ══════════════════════════════════════════════
+function buildSummaryPage(){
+  // Stats grid
+  const counts={
+    Publications: document.getElementById('pubs-list').children.length,
+    Patents: document.getElementById('patents-list').children.length,
+    Projects: document.getElementById('projects-list').children.length,
+    Awards: document.getElementById('awards-list').children.length,
+    Events: document.getElementById('events-list').children.length,
+    'FDP/FIP': document.getElementById('fdp-list').children.length,
+    Talks: document.getElementById('talks-list').children.length,
+    Qualifications: document.getElementById('quals-list').children.length,
+    'Teaching Exp.': document.getElementById('exp-teaching-list').children.length,
+    'Industry Exp.': document.getElementById('exp-industry-list').children.length,
+    'Research Exp.': document.getElementById('exp-research-list').children.length,
+  };
+  const saved=getSavedSections().filter(s=>s!=='summary');
+  const grid=document.getElementById('summary-grid');
+  grid.innerHTML='';
+  Object.entries(counts).forEach(([label,num])=>{
+    grid.insertAdjacentHTML('beforeend',`<div class="summary-card ${num>0?'complete':''}"><div class="sc-num">${num}</div><div class="sc-label">${label}</div></div>`);
+  });
+  // Header info
+  const fname=document.getElementById('p-fname').value;
+  const lname=document.getElementById('p-lname').value;
+  const title=document.getElementById('p-title').value;
+  const desig=document.getElementById('p-desig').value;
+  const dept=document.getElementById('p-dept').value;
+  document.getElementById('summary-name').textContent=`${title} ${fname} ${lname}`;
+  document.getElementById('summary-desig').textContent=desig;
+  document.getElementById('summary-dept').textContent=dept+' — JAIN (Deemed-to-be University)';
+  if(photoDataURL){
+    document.getElementById('pdf-photo-preview').src=photoDataURL;
+    document.getElementById('pdf-photo-preview').style.display='';
+  }
+  const allDone=saved.length>=(SECTIONS.length-1);
+  document.getElementById('gen-pdf-btn').disabled=!allDone;
+}
+
+// ══════════════════════════════════════════════
+//  PDF GENERATION
+// ══════════════════════════════════════════════
+async function generatePDF(){
+  const btn=document.getElementById('gen-pdf-btn')||document.getElementById('quick-pdf-btn');
+  if(btn){btn.disabled=true;btn.textContent='⏳ Generating PDF…';}
+  showToast('Generating PDF — please wait…');
+  await new Promise(r=>setTimeout(r,100));
+  try{
+    const {jsPDF}=window.jspdf;
+    const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    const pw=210; const ph=297;
+    const margin=15;
+    const cw=pw-margin*2;
+
+    // ── Helper functions ──
+    const navy=[13,27,62]; const accent=[91,79,220]; const gold=[245,166,35];
+    const white=[255,255,255]; const light=[245,246,250]; const muted=[107,114,150];
+    const success=[26,138,90]; const textColor=[26,30,58];
+
+    function addHeader(title, pageNum){
+      // Top navy bar
+      doc.setFillColor(13,27,62);
+      doc.rect(0,0,pw,22,'F');
+      // Gold accent line
+      doc.setFillColor(245,166,35);
+      doc.rect(0,22,pw,2,'F');
+      // University name
+      doc.setTextColor(255,255,255);
+      doc.setFontSize(9); doc.setFont('helvetica','bold');
+      doc.text('JAIN (Deemed-to-be University)',margin,10);
+      doc.setFontSize(7); doc.setFont('helvetica','normal');
+      doc.text('Faculty Research & Academic Profile',margin,16);
+      // Section title right
+      doc.setFontSize(9); doc.setFont('helvetica','bold');
+      doc.text(title,pw-margin,10,{align:'right'});
+      doc.setFontSize(7); doc.setFont('helvetica','normal');
+      doc.text('Page '+pageNum,pw-margin,16,{align:'right'});
+      doc.setTextColor(26,30,58);
+    }
+
+    function addFooter(){
+      doc.setFillColor(13,27,62);
+      doc.rect(0,ph-12,pw,12,'F');
+      doc.setTextColor(255,255,255);
+      doc.setFontSize(7); doc.setFont('helvetica','normal');
+      doc.text('JAIN (Deemed-to-be University) | Faculty Research & Academic Profile',pw/2,ph-5,{align:'center'});
+      doc.text('Generated: '+new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'}),pw-margin,ph-5,{align:'right'});
+    }
+
+    let pageNum=1;
+    // ── PAGE 1: Cover / Personal ──
+    addHeader('Personal Profile',pageNum);
+    addFooter();
+
+    // Photo
+    let yPos=30;
+    if(photoDataURL){
+      try{
+        doc.addImage(photoDataURL,'JPEG',pw-margin-35,28,33,38);
+        // circle frame
+        doc.setDrawColor(13,27,62); doc.setLineWidth(.5);
+        doc.roundedRect(pw-margin-36,27,35,40,3,3);
+      }catch(e){}
+    }
+
+    // Name block
+    doc.setFillColor(91,79,220);
+    doc.rect(margin,yPos,80,1,'F');
+    doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(13,27,62);
+    const fname=document.getElementById('p-fname').value;
+    const lname=document.getElementById('p-lname').value;
+    const ptitle=document.getElementById('p-title').value;
+    doc.text(`${ptitle} ${fname} ${lname}`,margin,yPos+8);
+    doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(107,114,150);
+    doc.text(document.getElementById('p-desig').value||'',margin,yPos+15);
+    doc.setFontSize(9);
+    doc.text(document.getElementById('p-dept').value||'',margin,yPos+21);
+    doc.text('JAIN (Deemed-to-be University)',margin,yPos+27);
+    yPos+=36;
+
+    // Info table
+    const infoData=[
+      ['Employee ID',document.getElementById('p-empid').value||'—','School',document.getElementById('p-school').value||'—'],
+      ['Date of Joining',document.getElementById('p-doj').value||'—','Phone',document.getElementById('p-phone').value||'—'],
+      ['ORCID ID',document.getElementById('p-orcid').value||'—','Email',currentUser.email||'—'],
+      ['Research Areas',document.getElementById('p-research-areas').value||'—','Teaching',document.getElementById('p-teaching').value||'—'],
+    ];
+    doc.autoTable({
+      startY:yPos, margin:{left:margin,right:margin},
+      head:[['Field','Value','Field','Value']],
+      body:infoData,
+      styles:{fontSize:8,cellPadding:3,textColor:textColor},
+      headStyles:{fillColor:navy,textColor:white,fontStyle:'bold',fontSize:8},
+      alternateRowStyles:{fillColor:light},
+      columnStyles:{0:{fontStyle:'bold',fillColor:[235,237,248]},2:{fontStyle:'bold',fillColor:[235,237,248]}},
+      tableLineColor:200, tableLineWidth:0.1,
+    });
+    yPos=doc.lastAutoTable.finalY+8;
+
+    // Biography
+    const bio=document.getElementById('p-bio').value;
+    if(bio){
+      doc.setFillColor(13,27,62);
+      doc.rect(margin,yPos,cw,7,'F');
+      doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(9);
+      doc.text('ACADEMIC BIOGRAPHY',margin+3,yPos+5);
+      yPos+=10;
+      doc.setTextColor(26,30,58); doc.setFont('helvetica','normal'); doc.setFontSize(8.5);
+      const bioLines=doc.splitTextToSize(bio,cw);
+      doc.text(bioLines,margin,yPos);
+      yPos+=bioLines.length*5+5;
+    }
+
+    // ── Subsequent pages: one section per page ──
+    // Each extract() maps EXACTLY to the form fields in DOM order
+    const sectionDefs = [
+
+      // Credentials: select[0]=Degree | text[0]=Specialisation | number[0]=Year | text[1]=Institution | tags=Exam
+      {key:'credentials', title:'Credentials & Degrees', listId:'quals-list',
+       cols:['Degree','Specialisation','Year','Institution','Exam Cleared'],
+       extract: entry => {
+         const selects  = Array.from(entry.querySelectorAll('select')).map(s=>s.value||'—');
+         const texts    = Array.from(entry.querySelectorAll('input[type=text]')).map(i=>i.value||'—');
+         const numbers  = Array.from(entry.querySelectorAll('input[type=number]')).map(i=>i.value||'—');
+         const tags     = Array.from(entry.querySelectorAll('.tag.selected')).map(t=>t.textContent.trim()).join(', ')||'—';
+         return [ selects[0]||'—', texts[0]||'—', numbers[0]||'—', texts[1]||'—', tags ];
+       }
+      },
+
+      // Teaching Experience
+      {key:'experience_teaching', title:'Teaching Experience', listId:'exp-teaching-list',
+       cols:['Institution','Position Held','Nature of Appointment','Date of Joining','Date of Leaving','Job Responsibilities'],
+       extract: entry => {
+         const texts   = Array.from(entry.querySelectorAll('input[type=text]')).map(i=>i.value||'—');
+         const selects = Array.from(entry.querySelectorAll('select')).map(s=>s.value||'—');
+         const dates   = Array.from(entry.querySelectorAll('input[type=date]')).map(i=>i.value||'—');
+         const presentCb = entry.querySelector('.te-present');
+         const dol = presentCb&&presentCb.checked ? 'Presently Working' : (dates[1]||'—');
+         return [
+           texts[0]||'—',   // Institution
+           selects[0]||'—', // Position Held
+           selects[1]||'—', // Nature of Appointment
+           dates[0]||'—',   // Date of Joining
+           dol,              // Date of Leaving / Presently Working
+           selects[2]||'—', // Job Responsibilities
+         ];
+       }
+      },
+
+      // Industry Experience
+      {key:'experience_industry', title:'Industry Experience', listId:'exp-industry-list',
+       cols:['Organization','Position Held','Date of Joining','Date of Leaving'],
+       extract: entry => {
+         const texts   = Array.from(entry.querySelectorAll('input[type=text]')).map(i=>i.value||'—');
+         const dates   = Array.from(entry.querySelectorAll('input[type=date]')).map(i=>i.value||'—');
+         const presentCb = entry.querySelector('.te-present');
+         const dol = presentCb&&presentCb.checked ? 'Presently Working' : (dates[1]||'—');
+         return [
+           texts[0]||'—',   // Organization
+           texts[1]||'—',   // Position Held
+           dates[0]||'—',   // Date of Joining
+           dol,              // Date of Leaving / Presently Working
+         ];
+       }
+      },
+
+      // Research Project Experience
+      {key:'experience_research', title:'Research Project Experience', listId:'exp-research-list',
+       cols:['Institution','Project Title','Funding Agency','Total Grant','Duration','Position Held','Collaborating Institution'],
+       extract: entry => {
+         const texts   = Array.from(entry.querySelectorAll('input[type=text]')).map(i=>i.value||'—');
+         const selects = Array.from(entry.querySelectorAll('select')).map(s=>s.value||'—');
+         const posSel  = entry.querySelector('.re-pos');
+         let pos = posSel ? posSel.value||'—' : '—';
+         if(pos==='Other (please specify)'){
+           const otherInput=entry.querySelector('.re-other-wrap input');
+           pos = otherInput&&otherInput.value ? 'Other: '+otherInput.value : 'Other';
+         }
+         // DOM select order: [0]=Total Grant, [1]=Position Held (.re-pos)
+         // DOM text order: [0]=Institution, [1]=Project Title, [2]=Funding Agency, [3]=Duration, [4]=Collaborating Institution
+         return [
+           texts[0]||'—',   // Institution
+           texts[1]||'—',   // Project Title
+           texts[2]||'—',   // Funding Agency
+           selects[0]||'—', // Total Grant
+           texts[3]||'—',   // Duration
+           pos,              // Position Held
+           texts[4]||'—',   // Collaborating Institution
+         ];
+       }
+      },
+
+      // Publications: text[0]=Title, text[1]=Journal, number[0]=Year, text[2]=Vol/Issue, text[3]=Pages
+      //               text[4]=DOI, tags=Indexing, number[1]=Impact Factor, text[5]=Co-authors
+      {key:'publications', title:'Publications', listId:'pubs-list',
+       cols:['Title','Journal','Year','Volume / Issue','Pages','DOI / URL','Indexing','Impact Factor','Co-authors'],
+       extract: entry => {
+         const texts   = Array.from(entry.querySelectorAll('input[type=text]')).map(i=>i.value||'—');
+         const numbers = Array.from(entry.querySelectorAll('input[type=number]')).map(i=>i.value||'—');
+         const tags    = Array.from(entry.querySelectorAll('.tag.selected')).map(t=>t.textContent.trim()).join(', ')||'—';
+         // texts DOM order: [0]Title [1]Journal [2]Vol/Issue [3]Pages [4]DOI [5]Co-authors
+         // numbers DOM order: [0]Year [1]Impact Factor
+         return [
+           texts[0]||'—',   // Title
+           texts[1]||'—',   // Journal
+           numbers[0]||'—', // Year
+           texts[2]||'—',   // Volume / Issue
+           texts[3]||'—',   // Pages
+           texts[4]||'—',   // DOI
+           tags,             // Indexing
+           numbers[1]||'—', // Impact Factor
+           texts[5]||'—',   // Co-authors
+         ];
+       }
+      },
+
+      // Patents: text[0]=Title | text[1]=App.No | select[0]=Status | date[0]=Filing | date[1]=Grant
+      //          select[1]=Country | text[2]=Co-inventors
+      {key:'patents', title:'Patents', listId:'patents-list',
+       cols:['Title of Invention','App. Number','Status','Filing Date','Grant Date','Country / Office','Co-inventors'],
+       extract: entry => {
+         const texts   = Array.from(entry.querySelectorAll('input[type=text]')).map(i=>i.value||'—');
+         const dates   = Array.from(entry.querySelectorAll('input[type=date]')).map(i=>i.value||'—');
+         const selects = Array.from(entry.querySelectorAll('select')).map(s=>s.value||'—');
+         return [
+           texts[0]||'—',   // Title
+           texts[1]||'—',   // Application Number
+           selects[0]||'—', // Status
+           dates[0]||'—',   // Filing Date
+           dates[1]||'—',   // Grant Date
+           selects[1]||'—', // Country
+           texts[2]||'—',   // Co-inventors
+         ];
+       }
+      },
+
+      // Projects: text[0]=Title | text[1]=Agency | text[2]=Scheme | number[0]=Grant
+      //           select[0]=Role | date[0]=Start | date[1]=End | select[1]=Status
+      {key:'projects', title:'Research Projects & Grants', listId:'projects-list',
+       cols:['Project Title','Funding Agency','Scheme','Grant (₹)','Role','Start Date','End Date','Status'],
+       extract: entry => {
+         const texts   = Array.from(entry.querySelectorAll('input[type=text]')).map(i=>i.value||'—');
+         const numbers = Array.from(entry.querySelectorAll('input[type=number]')).map(i=>i.value||'—');
+         const dates   = Array.from(entry.querySelectorAll('input[type=date]')).map(i=>i.value||'—');
+         const selects = Array.from(entry.querySelectorAll('select')).map(s=>s.value||'—');
+         return [
+           texts[0]||'—',   // Project Title
+           texts[1]||'—',   // Funding Agency
+           texts[2]||'—',   // Scheme
+           numbers[0]||'—', // Grant Amount
+           selects[0]||'—', // Role
+           dates[0]||'—',   // Start Date
+           dates[1]||'—',   // End Date
+           selects[1]||'—', // Status
+         ];
+       }
+      },
+
+      // Awards: text[0]=Title | text[1]=Body | number[0]=Year | select[0]=Category | textarea=Desc
+      {key:'awards', title:'Awards & Recognitions', listId:'awards-list',
+       cols:['Award Title','Awarding Body','Year','Category','Description'],
+       extract: entry => {
+         const texts   = Array.from(entry.querySelectorAll('input[type=text]')).map(i=>i.value||'—');
+         const numbers = Array.from(entry.querySelectorAll('input[type=number]')).map(i=>i.value||'—');
+         const selects = Array.from(entry.querySelectorAll('select')).map(s=>s.value||'—');
+         const desc    = (entry.querySelector('textarea')||{}).value||'—';
+         return [
+           texts[0]||'—',   // Award Title
+           texts[1]||'—',   // Awarding Body
+           numbers[0]||'—', // Year
+           selects[0]||'—', // Category
+           desc,             // Description
+         ];
+       }
+      },
+
+      // Events: text[0]=Title | text[1]=OrgBody | select[0]=Type | text[2]=Date | text[3]=Venue
+      //         tags=Role | text[4]=Paper Title
+      {key:'events', title:'Conferences, Seminars & Workshops', listId:'events-list',
+       cols:['Event Title','Organising Body','Type','Date(s)','Venue / Mode','Your Role','Paper / Presentation Title'],
+       extract: entry => {
+         const texts   = Array.from(entry.querySelectorAll('input[type=text]')).map(i=>i.value||'—');
+         const selects = Array.from(entry.querySelectorAll('select')).map(s=>s.value||'—');
+         const tags    = Array.from(entry.querySelectorAll('.tag.selected')).map(t=>t.textContent.trim()).join(', ')||'—';
+         return [
+           texts[0]||'—',   // Event Title
+           texts[1]||'—',   // Organising Body
+           selects[0]||'—', // Type
+           texts[2]||'—',   // Date(s)
+           texts[3]||'—',   // Venue / Mode
+           tags,             // Your Role
+           texts[4]||'—',   // Paper Title
+         ];
+       }
+      },
+
+      // FDP: text[0]=Title | text[1]=Institution | select[0]=Type | text[2]=Duration
+      //      number[0]=Year | text[3]=Sponsoring Body | tags=Role
+      {key:'fdp', title:'FDP / FIP / Refresher Courses', listId:'fdp-list',
+       cols:['Programme Title','Institution','Type','Duration','Year','Sponsoring Body','Your Role'],
+       extract: entry => {
+         const texts   = Array.from(entry.querySelectorAll('input[type=text]')).map(i=>i.value||'—');
+         const numbers = Array.from(entry.querySelectorAll('input[type=number]')).map(i=>i.value||'—');
+         const selects = Array.from(entry.querySelectorAll('select')).map(s=>s.value||'—');
+         const tags    = Array.from(entry.querySelectorAll('.tag.selected')).map(t=>t.textContent.trim()).join(', ')||'—';
+         return [
+           texts[0]||'—',   // Programme Title
+           texts[1]||'—',   // Institution
+           selects[0]||'—', // Type
+           texts[2]||'—',   // Duration
+           numbers[0]||'—', // Year
+           texts[3]||'—',   // Sponsoring Body
+           tags,             // Role
+         ];
+       }
+      },
+
+      // Talks: text[0]=Topic | text[1]=Institution | select[0]=Type | date[0]=Date
+      //        select[1]=Mode | textarea=Description
+      {key:'talks', title:'Lectures, Keynotes & Session Chair', listId:'talks-list',
+       cols:['Topic / Title','Inviting Institution','Type','Date','Mode','Description'],
+       extract: entry => {
+         const texts   = Array.from(entry.querySelectorAll('input[type=text]')).map(i=>i.value||'—');
+         const dates   = Array.from(entry.querySelectorAll('input[type=date]')).map(i=>i.value||'—');
+         const selects = Array.from(entry.querySelectorAll('select')).map(s=>s.value||'—');
+         const desc    = (entry.querySelector('textarea')||{}).value||'—';
+         return [
+           texts[0]||'—',   // Topic / Title
+           texts[1]||'—',   // Inviting Institution
+           selects[0]||'—', // Type
+           dates[0]||'—',   // Date
+           selects[1]||'—', // Mode
+           desc,             // Description
+         ];
+       }
+      },
+    ];
+
+    for(const sec of sectionDefs){
+      pageNum++;
+      doc.addPage();
+      addHeader(sec.title, pageNum);
+      addFooter();
+      yPos=28;
+
+      // Section colour band
+      doc.setFillColor(91,79,220);
+      doc.rect(margin,yPos,cw,8,'F');
+      doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(11);
+      doc.text(sec.title.toUpperCase(),margin+4,yPos+5.5);
+      yPos+=13;
+
+      const entries=Array.from(document.getElementById(sec.listId).querySelectorAll('.dynamic-entry'));
+      if(entries.length===0){
+        doc.setTextColor(107,114,150); doc.setFont('helvetica','italic'); doc.setFontSize(9);
+        doc.text('No entries recorded for this section.',margin,yPos+6);
+      } else {
+        const rows=entries.map(entry=> sec.extract(entry).map(v=>String(v||'—')));
+        doc.autoTable({
+          startY:yPos, margin:{left:margin,right:margin},
+          head:[sec.cols],
+          body:rows,
+          styles:{fontSize:7.5,cellPadding:3,textColor:textColor,overflow:'linebreak',cellWidth:'auto'},
+          headStyles:{fillColor:navy,textColor:white,fontStyle:'bold',fontSize:8},
+          alternateRowStyles:{fillColor:light},
+          tableLineColor:[220,224,240], tableLineWidth:0.2,
+          didDrawCell:(data)=>{
+            if(data.section==='head'){
+              doc.setFillColor(245,166,35);
+              doc.rect(data.cell.x,data.cell.y+data.cell.height-1,data.cell.width,1,'F');
+            }
+          }
+        });
+      }
+    }
+
+    // ── Last page: Summary stats ──
+    pageNum++;
+    doc.addPage();
+    addHeader('Profile Summary',pageNum);
+    addFooter();
+    yPos=28;
+
+    // Summary heading
+    doc.setFillColor(13,27,62);
+    doc.rect(margin,yPos,cw,10,'F');
+    doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(12);
+    doc.text('ACADEMIC PROFILE SUMMARY',pw/2,yPos+7,{align:'center'});
+    yPos+=16;
+
+    // Stats boxes (3 per row)
+    const stats=[
+      {label:'Publications',val:document.getElementById('pubs-list').children.length},
+      {label:'Patents',val:document.getElementById('patents-list').children.length},
+      {label:'Research Projects',val:document.getElementById('projects-list').children.length},
+      {label:'Awards',val:document.getElementById('awards-list').children.length},
+      {label:'Conferences/Events',val:document.getElementById('events-list').children.length},
+      {label:'FDP/FIP Programs',val:document.getElementById('fdp-list').children.length},
+      {label:'Talks/Keynotes',val:document.getElementById('talks-list').children.length},
+      {label:'Qualifications',val:document.getElementById('quals-list').children.length},
+      {label:'Teaching Exp.',val:document.getElementById('exp-teaching-list').children.length},
+      {label:'Industry Exp.',val:document.getElementById('exp-industry-list').children.length},
+      {label:'Research Exp.',val:document.getElementById('exp-research-list').children.length},
+    ];
+    const bw=(cw-10)/3; const bh=22;
+    stats.forEach((s,i)=>{
+      const col=i%3; const row=Math.floor(i/3);
+      const bx=margin+col*(bw+5); const by=yPos+row*(bh+4);
+      if(s.val>0){doc.setFillColor(91,79,220);}else{doc.setFillColor(107,114,150);}
+      doc.roundedRect(bx,by,bw,bh,2,2,'F');
+      doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(18);
+      doc.text(String(s.val),bx+bw/2,by+13,{align:'center'});
+      doc.setFontSize(7); doc.setFont('helvetica','normal');
+      doc.text(s.label,bx+bw/2,by+19,{align:'center'});
+    });
+    yPos+=Math.ceil(stats.length/3)*(bh+4)+10;
+
+    // Declaration
+    doc.setFillColor(245,246,250);
+    doc.rect(margin,yPos,cw,28,'F');
+    doc.setTextColor(13,27,62); doc.setFont('helvetica','bold'); doc.setFontSize(9);
+    doc.text('DECLARATION',margin+4,yPos+7);
+    doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(26,30,58);
+    const declaration=`I hereby declare that all the information furnished in this profile is true, complete and correct to the best of my knowledge and belief. I understand that in the event of any information being found false or incorrect at any stage, my profile may be disqualified.`;
+    const declLines=doc.splitTextToSize(declaration,cw-8);
+    doc.text(declLines,margin+4,yPos+13);
+    yPos+=32;
+
+    // Signature line
+    doc.setDrawColor(13,27,62); doc.setLineWidth(.3);
+    doc.line(margin,yPos+20,margin+60,yPos+20);
+    doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(107,114,150);
+    doc.text('Signature',margin,yPos+25);
+    doc.text('Date: ____________________',margin+70,yPos+25);
+    doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.setTextColor(13,27,62);
+    doc.text(`${ptitle} ${fname} ${lname}`,margin,yPos+30);
+    doc.setFont('helvetica','normal'); doc.setFontSize(7.5);
+    doc.text(document.getElementById('p-desig').value||'',margin,yPos+35);
+
+    // Save PDF
+    const filename=`JAIN_Faculty_Profile_${fname}_${lname}_${new Date().getFullYear()}.pdf`;
+    doc.save(filename);
+
+    // Also attempt to send to Drive as base64
+    const pdfBase64=doc.output('datauristring');
+    postToScript({type:'PDF_PROFILE',email:currentUser.email,name:`${ptitle} ${fname} ${lname}`,empid:currentUser.empid,filename,pdfBase64:pdfBase64.substring(0,50000),timestamp:new Date().toISOString()});
+
+    showToast('PDF downloaded successfully! ✓','green');
+  }catch(err){
+    console.error('PDF error:',err);
+    showToast('PDF generation failed. Please try again.','red');
+  }
+  if(btn){btn.disabled=false;btn.innerHTML='📄 Generate & Download PDF Profile Report';}
+}
+
+// ══════════════════════════════════════════════
+//  RE-SYNC TO DRIVE
+// ══════════════════════════════════════════════
+async function resyncToDrive(){
+  if(!currentUser){ showToast('Please log in first','red'); return; }
+  if(!scriptUrl){ showToast('Please configure Drive first (⚙ Drive Config)','red'); return; }
+  if(!confirm('This will re-send your registration and all saved section data to Google Drive. Continue?')) return;
+
+  showToast('🔄 Re-syncing to Drive…');
+
+  // 1. Re-send registration
+  await postToScript({
+    type:'REGISTRATION',
+    name: currentUser.name,
+    email: currentUser.email,
+    dept: currentUser.dept||document.getElementById('p-dept').value||'',
+    empid: currentUser.empid||document.getElementById('p-empid').value||'',
+    timestamp: new Date().toISOString()
+  });
+
+  // 2. Re-send all saved section data
+  let synced=0;
+  for(const s of SECTIONS.filter(s=>s!=='summary')){
+    const saved=localStorage.getItem(`jain_data_${currentUser.email}_${s}`);
+    if(saved){
+      await postToScript(JSON.parse(saved));
+      synced++;
+    }
+  }
+
+  showToast(`✅ Re-sync complete! Registration + ${synced} section(s) sent to Drive.`,'green');
+}
+
+// ══════════════════════════════════════════════
+//  RESET
+// ══════════════════════════════════════════════
+function resetAllLocalData(){
+  if(!confirm('⚠ This will clear all your locally saved section data and log you out.\n\nYour login (email & password) will be kept — just re-login and fill again.\n\nYour data already synced to Google Drive is NOT affected.\n\nContinue?')) return;
+  // Keep user accounts (login credentials), clear everything else
+  const users = localStorage.getItem('jain_users');
+  const scriptUrlBackup = localStorage.getItem('jain_script_url');
+  Object.keys(localStorage).filter(k => k.startsWith('jain_')).forEach(k => localStorage.removeItem(k));
+  // Restore accounts and script URL so login still works
+  if(users) localStorage.setItem('jain_users', users);
+  if(scriptUrlBackup) localStorage.setItem('jain_script_url', scriptUrlBackup);
+  showToast('✅ Local data cleared. Logging you out now…', 'green');
+  setTimeout(() => { doLogout(); }, 1500);
+}
+function resetLoginForm(){
+  document.getElementById('login-email').value='';
+  document.getElementById('login-password').value='';
+  document.getElementById('login-captcha-ans').value='';
+  document.getElementById('login-err').textContent='';
+  genCaptcha('login');
+}
+function resetRegisterForm(){
+  ['reg-name','reg-email','reg-dept','reg-empid','reg-pass','reg-pass2'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('reg-captcha-ans').value='';
+  document.getElementById('reg-err').textContent='';
+  document.getElementById('reg-ok').textContent='';
+  genCaptcha('reg');
+}
+function resetSection(section){
+  if(!confirm(`Reset all data in "${SECTION_LABELS[section]}"? Form fields and entries will be cleared. Drive data is NOT affected.`)) return;
+  const panel=document.getElementById('sec-'+section);
+  panel.querySelectorAll('input[type=text],input[type=email],input[type=number],input[type=date],input[type=tel],input[type=url],textarea').forEach(el=>el.value='');
+  panel.querySelectorAll('select').forEach(el=>el.selectedIndex=0);
+  panel.querySelectorAll('.tag.selected').forEach(t=>t.classList.remove('selected'));
+  const listMap={credentials:'quals-list',experience_teaching:'exp-teaching-list',experience_industry:'exp-industry-list',experience_research:'exp-research-list',publications:'pubs-list',patents:'patents-list',projects:'projects-list',awards:'awards-list',events:'events-list',fdp:'fdp-list',talks:'talks-list'};
+  if(section==='experience'){
+    ['exp-teaching-list','exp-industry-list','exp-research-list'].forEach(lid=>{const l=document.getElementById(lid);if(l)l.innerHTML='';});
+  } else if(listMap[section]){const l=document.getElementById(listMap[section]);if(l)l.innerHTML='';}
+  panel.querySelectorAll('.uz-name').forEach(el=>el.textContent='');
+  panel.querySelectorAll('.file-list').forEach(el=>el.innerHTML='');
+  panel.querySelectorAll('input[type=file]').forEach(el=>el.value='');
+  if(section==='personal'){
+    photoDataURL='';
+    document.getElementById('photo-preview').src='';
+    document.getElementById('photo-preview').style.display='none';
+    document.getElementById('photo-ph').style.display='';
+  }
+  if(currentUser) localStorage.removeItem(`jain_data_${currentUser.email}_${section}`);
+  updateProgress(); refreshTabStates();
+  showToast(`${SECTION_LABELS[section]} reset ✓`);
+}
+
+// ══════════════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════════════
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast '+(type||'');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+// ══════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════
+genCaptcha('login');
+</script>
+</body>
+</html>
